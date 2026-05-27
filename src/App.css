@@ -1,0 +1,492 @@
+:root {
+  --primary: #4FC3F7;
+  --primary-dark: #29B6F6;
+  --primary-light: #B3E5FC;
+  --bg: #F0F8FF;
+  --card: #FFFFFF;
+  --text: #263238;
+  --text-secondary: #78909C;
+  --success: #66BB6A;
+  --water: rgba(79, 195, 247, 0.6);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+
+.header h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.settings-btn {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Main Content */
+.main-content {
+  padding: 20px;
+}
+
+/* Cup */
+.cup-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 20px;
+  position: relative;
+}
+
+.cup {
+  width: 180px;
+  height: 220px;
+  background: white;
+  border: 4px solid var(--primary);
+  border-radius: 0 0 30px 30px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(79, 195, 247, 0.2);
+}
+
+.cup-handle {
+  position: absolute;
+  right: calc(50% - 110px);
+  top: 60px;
+  width: 28px;
+  height: 60px;
+  border: 4px solid var(--primary);
+  border-left: none;
+  border-radius: 0 20px 20px 0;
+}
+
+.water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(79, 195, 247, 0.5), rgba(41, 182, 246, 0.7));
+  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 0 26px 26px;
+}
+
+.wave {
+  position: absolute;
+  top: -10px;
+  left: -20%;
+  width: 140%;
+  height: 20px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, transparent 70%);
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateX(-10%) rotate(-1deg); }
+  50% { transform: translateX(10%) rotate(1deg); }
+}
+
+.cup-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.current-ml {
+  display: block;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  line-height: 1;
+}
+
+.goal-ml {
+  display: block;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Progress */
+.progress-info {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.progress-bar-bg {
+  height: 8px;
+  background: #E3F2FD;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--success));
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.progress-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.cups-count {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  font-size: 22px;
+}
+
+.cup-icon {
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+
+.cup-icon.filled {
+  opacity: 1;
+}
+
+/* Quick Add Buttons */
+.quick-add {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.add-btn {
+  flex: 1;
+  padding: 14px 8px;
+  border: 2px solid var(--primary-light);
+  background: white;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+  background: var(--primary-light);
+}
+
+.add-btn.primary {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, #E1F5FE, #B3E5FC);
+}
+
+.add-amount {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.add-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Extra Actions */
+.extra-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #E0E0E0;
+  background: white;
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.action-btn:active {
+  background: #F5F5F5;
+}
+
+.action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Custom Input */
+.custom-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-input input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid var(--primary-light);
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+}
+
+.custom-input input:focus {
+  border-color: var(--primary);
+}
+
+.custom-input button {
+  padding: 12px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-input button:disabled {
+  opacity: 0.5;
+}
+
+/* Weekly Chart */
+.weekly-chart {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.weekly-chart h2 {
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 160px;
+  gap: 6px;
+}
+
+.chart-bar-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.chart-bar-wrapper.today .chart-label {
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+.chart-amount {
+  font-size: 10px;
+  color: var(--text-secondary);
+  height: 20px;
+  line-height: 20px;
+}
+
+.chart-bar-container {
+  flex: 1;
+  width: 100%;
+  max-width: 32px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.chart-bar {
+  width: 100%;
+  background: var(--primary-light);
+  border-radius: 6px 6px 0 0;
+  transition: height 0.5s ease;
+  min-height: 2px;
+}
+
+.chart-bar.met {
+  background: linear-gradient(180deg, var(--success), var(--primary));
+}
+
+.goal-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--success);
+  opacity: 0.4;
+}
+
+.chart-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+/* Ripple Overlay */
+.ripple-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.ripple-content {
+  background: rgba(79, 195, 247, 0.9);
+  color: white;
+  padding: 20px 40px;
+  border-radius: 20px;
+  text-align: center;
+  animation: rippleAnim 0.6s ease-out forwards;
+}
+
+@keyframes rippleAnim {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+.ripple-amount {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.ripple-check {
+  font-size: 20px;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+
+.modal {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 340px;
+  animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.modal h2 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.modal-body input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--primary-light);
+  border-radius: 12px;
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+}
+
+.modal-body input:focus {
+  border-color: var(--primary);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.cancel-btn, .confirm-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #F5F5F5;
+  color: var(--text-secondary);
+}
+
+.confirm-btn {
+  background: var(--primary);
+  color: white;
+}

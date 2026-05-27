@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -L -o /tmp/gh.zip \"https://github.com/cli/cli/releases/download/v2.92.0/gh_2.92.0_windows_amd64.zip\")",
+      "Bash(findstr LISTENING)",
+      "Bash(curl -x http://127.0.0.1:7892 https://www.google.com -s -o /dev/null -w \"%{http_code}\" --connect-timeout 5)",
+      "Bash(tasklist)",
+      "Bash(powershell -Command \"Get-ItemProperty 'HKCU:\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Internet Settings' | Select-Object ProxyServer, ProxyEnable, AutoConfigURL | Format-List\")",
+      "Bash(curl -x http://127.0.0.1:7892 https://api.github.com -s --connect-timeout 10 --max-time 15)",
+      "Bash(curl -x http://127.0.0.1:7892 https://api.github.com --connect-timeout 10 --max-time 15 -v)",
+      "Bash(curl -x http://127.0.0.1:7892 https://api.github.com -k --connect-timeout 10 --max-time 15)",
+      "Bash(export HTTP_PROXY=http://127.0.0.1:7892)",
+      "Bash(export HTTPS_PROXY=http://127.0.0.1:7892)",
+      "Bash(export ALL_PROXY=http://127.0.0.1:7892)",
+      "Bash(curl https://api.github.com -v --connect-timeout 10 --max-time 15)",
+      "Bash(powershell -Command 'Get-Process | Where-Object { $_.ProcessName -match '\\\\''clash|v2ray|nekoray|hiddify|verge|mihomo|sing'\\\\'' } | Select-Object ProcessName, Id | Format-Table -AutoSize')",
+      "Bash(git ls-remote *)",
+      "Bash(powershell -Command 'Get-NetAdapter | Where-Object { $_.Name -match '\\\\''clash|mihomo|tun|sing'\\\\'' } | Select-Object Name, Status, InterfaceDescription | Format-Table -AutoSize')",
+      "Bash(curl --ssl-no-revoke https://api.github.com --connect-timeout 10 --max-time 15 -s)",
+      "Bash(powershell -Command 'Get-ChildItem Cert:\\\\LocalMachine\\\\Root | Where-Object { $_.Subject -match '\\\\''clash|mihomo|mitmproxy|root'\\\\'' } | Select-Object Subject, Thumbprint')",
+      "Bash(git -c http.sslVerify=false -c http.version=HTTP/1.1 ls-remote https://github.com/yjwwuwei/test.git)",
+      "Bash(unset HTTP_PROXY HTTPS_PROXY ALL_PROXY http_proxy https_proxy)",
+      "Bash(curl https://api.github.com --connect-timeout 5 --max-time 10 -s -o /dev/null -w \"%{http_code}\")",
+      "Bash(curl https://api.github.com --tlsv1.2 --connect-timeout 10 --max-time 15 -s)",
+      "Bash(curl -s https://api.github.com --connect-timeout 10 --max-time 15 -w \"\\\\nHTTP_CODE:%{http_code}\\\\n\")",
+      "Read(//mingw64/ssl/certs/**)",
+      "Read(//usr/ssl/certs/**)",
+      "Read(//d//**)"
+    ]
+  }
+}
