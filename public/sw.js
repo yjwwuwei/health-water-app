@@ -1,11 +1,10 @@
 const CACHE_NAME = 'water-app-v1';
-const BASE = '/health-water-app';
 const ASSETS = [
-  BASE + '/',
-  BASE + '/index.html',
-  BASE + '/manifest.json',
-  BASE + '/icon-192.png',
-  BASE + '/icon-512.png',
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
 ];
 
 self.addEventListener('install', (e) => {

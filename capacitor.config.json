@@ -1,0 +1,8 @@
+{
+  "appId": "com.yjwwuwei.healthwater",
+  "appName": "健康喝水",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}

@@ -2,7 +2,7 @@
   "name": "健康喝水",
   "short_name": "喝水",
   "description": "每日健康饮水记录追踪",
-  "start_url": "/health-water-app/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#F0F8FF",
   "theme_color": "#4FC3F7",
