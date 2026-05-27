@@ -29,4 +29,4 @@ android/.gradle
 android/build
 android/app/build
 android/capacitor-cordova-android-plugins/build
-*.apk
+# *.apk  - APK保留，用于版本发布
