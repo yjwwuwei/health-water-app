@@ -692,3 +692,72 @@ body {
 .toggle input:checked + .toggle-slider::before {
   transform: translateX(20px);
 }
+
+/* Pose Guide */
+.pose-guide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 310;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.pose-guide-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 300px;
+  width: 100%;
+  text-align: center;
+}
+
+.pose-guide-card h3 {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.pose-guide-demo {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pose-guide-figure {
+  flex-shrink: 0;
+}
+
+.pose-guide-text {
+  text-align: left;
+}
+
+.pose-guide-step {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.pose-guide-start {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pose-guide-start:active {
+  background: var(--primary-dark);
+}

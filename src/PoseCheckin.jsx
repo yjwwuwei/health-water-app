@@ -1,8 +1,35 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 
-const DETECT_DURATION = 1000 // 连续检测1秒才算成功
+const DETECT_DURATION = 1500 // 连续检测1.5秒
 const VIDEO_WIDTH = 320
-const VIDEO_HEIGHT = 240
+const VIDEO_HEIGHT = 480
+
+// 全局缓存模型，避免重复加载
+let cachedDetector = null
+let modelLoading = null
+
+async function getDetector() {
+  if (cachedDetector) return cachedDetector
+  if (modelLoading) return modelLoading
+
+  modelLoading = (async () => {
+    const tf = await import('@tensorflow/tfjs')
+    await import('@tensorflow/tfjs-backend-wasm')
+    await tf.setBackend('wasm')
+    await tf.ready()
+
+    const poseDetection = await import('@tensorflow-models/pose-detection')
+    const detector = await poseDetection.createDetector(
+      poseDetection.SupportedModels.MoveNet,
+      { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
+    )
+    cachedDetector = detector
+    modelLoading = null
+    return detector
+  })()
+
+  return modelLoading
+}
 
 // 骨架连接线
 const SKELETON = [
@@ -19,7 +46,6 @@ const SKELETON = [
 export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
   const videoRef = useRef(null)
   const canvasRef = useRef(null)
-  const detectorRef = useRef(null)
   const streamRef = useRef(null)
   const rafRef = useRef(null)
   const detectStartRef = useRef(null)
@@ -27,36 +53,18 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
   const [progress, setProgress] = useState(0)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
-
-  const checkPose = useCallback((keypoints) => {
-    const nose = keypoints.find(k => k.name === 'nose')
-    const leftWrist = keypoints.find(k => k.name === 'left_wrist')
-    const rightWrist = keypoints.find(k => k.name === 'right_wrist')
-
-    if (!nose || nose.score < 0.5) return false
-
-    const checkWrist = (wrist) => {
-      if (!wrist || wrist.score < 0.5) return false
-      // 手腕高于鼻子（手臂上举）
-      const raisedUp = wrist.y < nose.y - 0.05
-      // 手腕水平靠近脸部
-      const nearFace = Math.abs(wrist.x - nose.x) < 0.2
-      return raisedUp && nearFace
-    }
-
-    return checkWrist(leftWrist) || checkWrist(rightWrist)
-  }, [])
+  const [showGuide, setShowGuide] = useState(true)
+  const [poseStatus, setPoseStatus] = useState('等待检测')
 
   const drawSkeleton = useCallback((ctx, keypoints, width, height) => {
     ctx.clearRect(0, 0, width, height)
 
-    // 画连接线
     ctx.strokeStyle = '#4FC3F7'
     ctx.lineWidth = 3
     SKELETON.forEach(([i, j]) => {
       const a = keypoints[i]
       const b = keypoints[j]
-      if (a.score > 0.3 && b.score > 0.3) {
+      if (a && b && a.score > 0.3 && b.score > 0.3) {
         ctx.beginPath()
         ctx.moveTo(a.x * width, a.y * height)
         ctx.lineTo(b.x * width, b.y * height)
@@ -64,12 +72,10 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
       }
     })
 
-    // 画关键点
-    keypoints.forEach((kp, i) => {
+    keypoints.forEach((kp) => {
       if (kp.score > 0.3) {
-        ctx.fillStyle = i === 0 ? '#FF5722' : // 鼻子红色
-                        (kp.name === 'left_wrist' || kp.name === 'right_wrist') ? '#FFC107' : // 手腕黄色
-                        '#66BB6A' // 其他绿色
+        ctx.fillStyle = kp.name === 'nose' ? '#FF5722' :
+                        kp.name?.includes('wrist') ? '#FFC107' : '#66BB6A'
         ctx.beginPath()
         ctx.arc(kp.x * width, kp.y * height, 5, 0, 2 * Math.PI)
         ctx.fill()
@@ -78,22 +84,58 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
   }, [])
 
   const detect = useCallback(async () => {
-    const detector = detectorRef.current
     const video = videoRef.current
     const canvas = canvasRef.current
-    if (!detector || !video || !canvas || video.readyState < 2) {
+    if (!video || !canvas || video.readyState < 2) {
       rafRef.current = requestAnimationFrame(detect)
       return
     }
 
     const ctx = canvas.getContext('2d')
     try {
+      const detector = await getDetector()
       const poses = await detector.estimatePoses(video)
       if (poses.length > 0) {
         const keypoints = poses[0].keypoints
         drawSkeleton(ctx, keypoints, canvas.width, canvas.height)
 
-        const isDetected = checkPose(keypoints)
+        // 检测逻辑：手腕高于肩膀且靠近脸部
+        const nose = keypoints.find(k => k.name === 'nose')
+        const leftWrist = keypoints.find(k => k.name === 'left_wrist')
+        const rightWrist = keypoints.find(k => k.name === 'right_wrist')
+        const leftShoulder = keypoints.find(k => k.name === 'left_shoulder')
+        const rightShoulder = keypoints.find(k => k.name === 'right_shoulder')
+
+        let isDetected = false
+
+        if (nose && nose.score > 0.4) {
+          const checkWrist = (wrist, shoulder) => {
+            if (!wrist || wrist.score < 0.4) return false
+            // 手腕高于鼻子
+            const aboveNose = wrist.y < nose.y
+            // 水平靠近脸部（在鼻子两侧0.25范围内）
+            const nearFace = Math.abs(wrist.x - nose.x) < 0.25
+            return aboveNose && nearFace
+          }
+
+          isDetected = checkWrist(leftWrist, leftShoulder) || checkWrist(rightWrist, rightShoulder)
+
+          // 更新状态提示
+          if (isDetected) {
+            setPoseStatus('检测到喝水姿势！保持不动...')
+          } else {
+            const leftUp = leftWrist && leftWrist.score > 0.4 && leftWrist.y < nose.y
+            const rightUp = rightWrist && rightWrist.score > 0.4 && rightWrist.y < nose.y
+            if (leftUp || rightUp) {
+              setPoseStatus('手靠近脸部一点')
+            } else {
+              setPoseStatus('请把手举到嘴边')
+            }
+          }
+        } else {
+          setPoseStatus('请面向摄像头')
+        }
+
         if (isDetected) {
           if (!detectStartRef.current) {
             detectStartRef.current = Date.now()
@@ -111,20 +153,21 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
           detectStartRef.current = null
           setProgress(0)
         }
+      } else {
+        setPoseStatus('请站在摄像头前')
       }
     } catch (e) {
-      // 单帧检测失败，继续
+      // 单帧失败，继续
     }
 
     rafRef.current = requestAnimationFrame(detect)
-  }, [checkPose, drawSkeleton, onSuccess])
+  }, [drawSkeleton, onSuccess])
 
   useEffect(() => {
     let cancelled = false
 
     const init = async () => {
       try {
-        // 获取摄像头
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: 'user', width: VIDEO_WIDTH, height: VIDEO_HEIGHT },
           audio: false,
@@ -140,29 +183,10 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
           await videoRef.current.play()
         }
 
-        // 初始化 TF.js WASM 后端
-        const tf = await import('@tensorflow/tfjs')
-        await import('@tensorflow/tfjs-backend-wasm')
-        await tf.setBackend('wasm')
-        await tf.ready()
+        await getDetector()
 
         if (cancelled) return
-
-        // 创建姿态检测器
-        const poseDetection = await import('@tensorflow-models/pose-detection')
-        const detector = await poseDetection.createDetector(
-          poseDetection.SupportedModels.MoveNet,
-          { modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING }
-        )
-
-        if (cancelled) {
-          detector.dispose()
-          return
-        }
-        detectorRef.current = detector
         setLoading(false)
-
-        // 开始检测循环
         rafRef.current = requestAnimationFrame(detect)
       } catch (e) {
         if (!cancelled) {
@@ -176,12 +200,15 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
     return () => {
       cancelled = true
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
-      if (detectorRef.current) detectorRef.current.dispose()
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(t => t.stop())
       }
     }
   }, [detect])
+
+  const handleStart = () => {
+    setShowGuide(false)
+  }
 
   return (
     <div className="pose-overlay">
@@ -190,6 +217,44 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
         <span>姿势打卡</span>
         <button className="pose-skip" onClick={onSkip}>跳过</button>
       </div>
+
+      {/* 姿势示例引导 */}
+      {showGuide && !loading && !error && (
+        <div className="pose-guide-overlay">
+          <div className="pose-guide-card">
+            <h3>喝水姿势示范</h3>
+            <div className="pose-guide-demo">
+              <div className="pose-guide-figure">
+                <svg viewBox="0 0 120 200" width="120" height="200">
+                  {/* 头 */}
+                  <circle cx="60" cy="30" r="18" fill="none" stroke="#4FC3F7" strokeWidth="3"/>
+                  {/* 身体 */}
+                  <line x1="60" y1="48" x2="60" y2="110" stroke="#4FC3F7" strokeWidth="3"/>
+                  {/* 左手臂 - 举起喝水 */}
+                  <line x1="60" y1="65" x2="35" y2="45" stroke="#4FC3F7" strokeWidth="3"/>
+                  <line x1="35" y1="45" x2="42" y2="22" stroke="#FFC107" strokeWidth="3"/>
+                  {/* 右手臂 - 垂下 */}
+                  <line x1="60" y1="65" x2="85" y2="85" stroke="#4FC3F7" strokeWidth="3"/>
+                  <line x1="85" y1="85" x2="90" y2="115" stroke="#4FC3F7" strokeWidth="3"/>
+                  {/* 左腿 */}
+                  <line x1="60" y1="110" x2="40" y2="170" stroke="#4FC3F7" strokeWidth="3"/>
+                  {/* 右腿 */}
+                  <line x1="60" y1="110" x2="80" y2="170" stroke="#4FC3F7" strokeWidth="3"/>
+                  {/* 手（喝水手高亮） */}
+                  <circle cx="42" cy="22" r="6" fill="#FFC107"/>
+                  <circle cx="90" cy="115" r="5" fill="#4FC3F7" opacity="0.5"/>
+                </svg>
+              </div>
+              <div className="pose-guide-text">
+                <p className="pose-guide-step">1. 面朝摄像头站好</p>
+                <p className="pose-guide-step">2. 把一只手举到嘴边</p>
+                <p className="pose-guide-step">3. 保持 1.5 秒不动</p>
+              </div>
+            </div>
+            <button className="pose-guide-start" onClick={handleStart}>开始打卡</button>
+          </div>
+        </div>
+      )}
 
       <div className="pose-viewport">
         <video
@@ -219,7 +284,7 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
         {error && (
           <p className="pose-error">{error}</p>
         )}
-        {!loading && !error && !success && (
+        {!loading && !error && !success && !showGuide && (
           <>
             <div className="pose-progress-bar">
               <div
@@ -227,9 +292,7 @@ export default function PoseCheckin({ onSuccess, onCancel, onSkip }) {
                 style={{ width: `${progress * 100}%` }}
               />
             </div>
-            <p className="pose-hint">
-              请做出喝水姿势（手举到嘴边）
-            </p>
+            <p className="pose-hint">{poseStatus}</p>
           </>
         )}
         {success && (
