@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import PoseCheckin from './PoseCheckin'
 import './App.css'
 
 const DEFAULT_GOAL = 2000
@@ -11,10 +12,11 @@ function getToday() {
 function loadData() {
   try {
     const raw = localStorage.getItem('waterData')
-    if (!raw) return { goal: DEFAULT_GOAL, records: {} }
-    return JSON.parse(raw)
+    if (!raw) return { goal: DEFAULT_GOAL, records: {}, checkInEnabled: false }
+    const data = JSON.parse(raw)
+    return { ...data, checkInEnabled: data.checkInEnabled || false }
   } catch {
-    return { goal: DEFAULT_GOAL, records: {} }
+    return { goal: DEFAULT_GOAL, records: {}, checkInEnabled: false }
   }
 }
 
@@ -41,11 +43,14 @@ function getWeekdayLabel(dateStr) {
 function App() {
   const [goal, setGoal] = useState(DEFAULT_GOAL)
   const [records, setRecords] = useState({})
+  const [checkInEnabled, setCheckInEnabled] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [customAmount, setCustomAmount] = useState('')
   const [showCustom, setShowCustom] = useState(false)
   const [newGoal, setNewGoal] = useState('')
   const [ripple, setRipple] = useState(null)
+  const [showCamera, setShowCamera] = useState(false)
+  const [pendingAmount, setPendingAmount] = useState(0)
 
   const today = getToday()
   const todayTotal = records[today] || 0
@@ -55,18 +60,42 @@ function App() {
     const data = loadData()
     setGoal(data.goal)
     setRecords(data.records)
+    setCheckInEnabled(data.checkInEnabled)
   }, [])
 
-  const addWater = useCallback((amount) => {
+  const doAddWater = useCallback((amount) => {
     setRecords(prev => {
       const updated = { ...prev, [today]: (prev[today] || 0) + amount }
-      const data = { goal, records: updated }
-      saveData(data)
+      saveData({ goal, records: updated, checkInEnabled })
       return updated
     })
     setRipple(amount)
     setTimeout(() => setRipple(null), 600)
-  }, [today, goal])
+  }, [today, goal, checkInEnabled])
+
+  const addWater = useCallback((amount) => {
+    if (checkInEnabled) {
+      setPendingAmount(amount)
+      setShowCamera(true)
+    } else {
+      doAddWater(amount)
+    }
+  }, [checkInEnabled, doAddWater])
+
+  const handleCheckinSuccess = useCallback(() => {
+    setShowCamera(false)
+    doAddWater(pendingAmount)
+  }, [doAddWater, pendingAmount])
+
+  const handleCheckinSkip = useCallback(() => {
+    setShowCamera(false)
+    doAddWater(pendingAmount)
+  }, [doAddWater, pendingAmount])
+
+  const handleCheckinCancel = useCallback(() => {
+    setShowCamera(false)
+    setPendingAmount(0)
+  }, [])
 
   const handleCustomAdd = () => {
     const amount = parseInt(customAmount)
@@ -81,18 +110,22 @@ function App() {
     const g = parseInt(newGoal)
     if (g >= 500 && g <= 10000) {
       setGoal(g)
-      saveData({ goal: g, records })
+      saveData({ goal: g, records, checkInEnabled })
       setShowSettings(false)
       setNewGoal('')
     }
+  }
+
+  const handleCheckInToggle = (enabled) => {
+    setCheckInEnabled(enabled)
+    saveData({ goal, records, checkInEnabled: enabled })
   }
 
   const handleUndo = () => {
     if (todayTotal > 0) {
       setRecords(prev => {
         const updated = { ...prev, [today]: Math.max(0, (prev[today] || 0) - 250) }
-        const data = { goal, records: updated }
-        saveData(data)
+        saveData({ goal, records: updated, checkInEnabled })
         return updated
       })
     }
@@ -236,12 +269,24 @@ function App() {
         </div>
       )}
 
+      {/* Pose Check-in Camera */}
+      {showCamera && (
+        <PoseCheckin
+          onSuccess={handleCheckinSuccess}
+          onCancel={handleCheckinCancel}
+          onSkip={handleCheckinSkip}
+        />
+      )}
+
       {/* Settings Modal */}
       {showSettings && (
         <div className="modal-overlay" onClick={() => setShowSettings(false)}>
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <h2>设置每日目标</h2>
+            <h2>设置</h2>
+
+            {/* Goal Setting */}
             <div className="modal-body">
+              <label className="setting-label">每日目标</label>
               <input
                 type="number"
                 placeholder="目标毫升数"
@@ -253,6 +298,25 @@ function App() {
               />
               <p className="hint">建议每日 1500~2500 ml</p>
             </div>
+
+            {/* Check-in Toggle */}
+            <div className="modal-body">
+              <div className="setting-row">
+                <div>
+                  <label className="setting-label">姿势打卡</label>
+                  <p className="hint">每次加水前需做喝水姿势</p>
+                </div>
+                <label className="toggle">
+                  <input
+                    type="checkbox"
+                    checked={checkInEnabled}
+                    onChange={e => handleCheckInToggle(e.target.checked)}
+                  />
+                  <span className="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
             <div className="modal-actions">
               <button className="cancel-btn" onClick={() => setShowSettings(false)}>取消</button>
               <button className="confirm-btn" onClick={handleGoalChange}>确定</button>
