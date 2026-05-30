@@ -761,3 +761,78 @@ body {
 .pose-guide-start:active {
   background: var(--primary-dark);
 }
+
+/* Water Particles */
+.water-particle {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  font-size: 20px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Celebration Overlay */
+.celebration-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.celebration-content {
+  background: white;
+  border-radius: 24px;
+  padding: 32px 40px;
+  text-align: center;
+  z-index: 251;
+}
+
+.celebration-emoji {
+  font-size: 60px;
+  margin-bottom: 12px;
+}
+
+.celebration-content h2 {
+  font-size: 24px;
+  color: var(--success);
+  margin-bottom: 4px;
+}
+
+.celebration-content p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.celebration-total {
+  font-size: 36px !important;
+  font-weight: 700;
+  color: var(--primary-dark) !important;
+  margin: 12px 0 !important;
+}
+
+.celebration-close {
+  margin-top: 16px;
+  padding: 12px 32px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.confetti {
+  position: absolute;
+  top: -20px;
+  font-size: 24px;
+  pointer-events: none;
+  z-index: 252;
+}
