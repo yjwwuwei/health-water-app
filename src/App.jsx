@@ -1,6 +1,17 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { AuthProvider, useAuth } from './AuthContext'
+import {
+  migrateFromLocalStorage,
+  loadAllRecords,
+  saveRecord,
+  loadSetting,
+  saveSetting,
+} from './db'
+import { syncToCloud, loadFromCloud } from './firebase'
 import PoseCheckin from './PoseCheckin'
+import LoginPage from './LoginPage'
+import Leaderboard from './Leaderboard'
 import './App.css'
 
 const DEFAULT_GOAL = 2000
@@ -8,21 +19,6 @@ const CUP_CAPACITY = 500
 
 function getToday() {
   return new Date().toISOString().slice(0, 10)
-}
-
-function loadData() {
-  try {
-    const raw = localStorage.getItem('waterData')
-    if (!raw) return { goal: DEFAULT_GOAL, records: {}, checkInEnabled: false }
-    const data = JSON.parse(raw)
-    return { ...data, checkInEnabled: data.checkInEnabled || false }
-  } catch {
-    return { goal: DEFAULT_GOAL, records: {}, checkInEnabled: false }
-  }
-}
-
-function saveData(data) {
-  localStorage.setItem('waterData', JSON.stringify(data))
 }
 
 function getWeekDates() {
@@ -41,7 +37,6 @@ function getWeekdayLabel(dateStr) {
   return days[new Date(dateStr).getDay()]
 }
 
-// 通用弹性按钮
 function BouncyButton({ children, className, onClick, disabled, ...props }) {
   return (
     <motion.button
@@ -58,7 +53,6 @@ function BouncyButton({ children, className, onClick, disabled, ...props }) {
   )
 }
 
-// 水滴飘落粒子
 function WaterDrop({ delay, x }) {
   return (
     <motion.div
@@ -76,7 +70,8 @@ function WaterDrop({ delay, x }) {
   )
 }
 
-function App() {
+function AppContent() {
+  const { user } = useAuth()
   const [goal, setGoal] = useState(DEFAULT_GOAL)
   const [records, setRecords] = useState({})
   const [checkInEnabled, setCheckInEnabled] = useState(false)
@@ -84,50 +79,95 @@ function App() {
   const [customAmount, setCustomAmount] = useState('')
   const [showCustom, setShowCustom] = useState(false)
   const [newGoal, setNewGoal] = useState('')
-  const [ripple, setRipple] = useState(null)
   const [showCamera, setShowCamera] = useState(false)
   const [pendingAmount, setPendingAmount] = useState(0)
   const [particles, setParticles] = useState([])
   const [goalReached, setGoalReached] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
+  const [showLeaderboard, setShowLeaderboard] = useState(false)
+  const [dataReady, setDataReady] = useState(false)
 
   const today = getToday()
   const todayTotal = records[today] || 0
   const progress = Math.min(todayTotal / goal, 1)
-  const prevProgressRef = useState(progress)[0]
 
+  // 初始化：迁移 localStorage + 加载 IndexedDB
   useEffect(() => {
-    const data = loadData()
-    setGoal(data.goal)
-    setRecords(data.records)
-    setCheckInEnabled(data.checkInEnabled)
+    const init = async () => {
+      await migrateFromLocalStorage()
+      const loadedRecords = await loadAllRecords()
+      const loadedGoal = await loadSetting('goal', DEFAULT_GOAL)
+      const loadedCheckIn = await loadSetting('checkInEnabled', false)
+      setRecords(loadedRecords)
+      setGoal(loadedGoal)
+      setCheckInEnabled(loadedCheckIn)
+      setDataReady(true)
+    }
+    init()
   }, [])
 
-  // 检测目标达成
+  // 登录后从云端同步数据
   useEffect(() => {
-    if (progress >= 1 && !goalReached) {
-      setGoalReached(true)
+    if (!user || user.isAnonymous || !dataReady) return
+    const sync = async () => {
+      try {
+        const cloudData = await loadFromCloud(user.uid)
+        // 合并云端数据到本地
+        if (cloudData.records && Object.keys(cloudData.records).length > 0) {
+          setRecords(prev => {
+            const merged = { ...prev }
+            for (const [date, amount] of Object.entries(cloudData.records)) {
+              if (!merged[date] || amount > merged[date]) {
+                merged[date] = amount
+              }
+            }
+            return merged
+          })
+          // 保存合并后的数据到 IndexedDB
+          for (const [date, amount] of Object.entries(cloudData.records)) {
+            await saveRecord(date, amount)
+          }
+        }
+        if (cloudData.goal) {
+          setGoal(cloudData.goal)
+          await saveSetting('goal', cloudData.goal)
+        }
+      } catch (e) {
+        console.error('云端同步失败:', e)
+      }
     }
+    sync()
+  }, [user, dataReady])
+
+  // 自动同步到云端（数据变化后延迟同步）
+  useEffect(() => {
+    if (!user || user.isAnonymous) return
+    const timer = setTimeout(async () => {
+      try {
+        await syncToCloud(user.uid, records, goal)
+      } catch (e) {
+        console.error('上传云端失败:', e)
+      }
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [records, goal, user])
+
+  useEffect(() => {
+    if (progress >= 1 && !goalReached) setGoalReached(true)
   }, [progress, goalReached])
 
-  const doAddWater = useCallback((amount) => {
-    const prevTotal = todayTotal
+  const doAddWater = useCallback(async (amount) => {
+    const newTotal = (todayTotal) + amount
     setRecords(prev => {
-      const updated = { ...prev, [today]: (prev[today] || 0) + amount }
-      saveData({ goal, records: updated, checkInEnabled })
+      const updated = { ...prev, [today]: newTotal }
       return updated
     })
-    setRipple(amount)
-    setTimeout(() => setRipple(null), 800)
-
-    // 水滴粒子效果
-    const newParticles = Array.from({ length: 3 }, (_, i) => ({
-      id: Date.now() + i,
-      delay: i * 0.1,
-      x: (Math.random() - 0.5) * 60,
-    }))
-    setParticles(newParticles)
+    await saveRecord(today, newTotal)
+    setParticles(Array.from({ length: 3 }, (_, i) => ({
+      id: Date.now() + i, delay: i * 0.1, x: (Math.random() - 0.5) * 60,
+    })))
     setTimeout(() => setParticles([]), 1000)
-  }, [today, goal, checkInEnabled, todayTotal])
+  }, [today, todayTotal])
 
   const addWater = useCallback((amount) => {
     if (checkInEnabled) {
@@ -162,28 +202,26 @@ function App() {
     }
   }
 
-  const handleGoalChange = () => {
+  const handleGoalChange = async () => {
     const g = parseInt(newGoal)
     if (g >= 500 && g <= 10000) {
       setGoal(g)
-      saveData({ goal: g, records, checkInEnabled })
+      await saveSetting('goal', g)
       setShowSettings(false)
       setNewGoal('')
     }
   }
 
-  const handleCheckInToggle = (enabled) => {
+  const handleCheckInToggle = async (enabled) => {
     setCheckInEnabled(enabled)
-    saveData({ goal, records, checkInEnabled: enabled })
+    await saveSetting('checkInEnabled', enabled)
   }
 
-  const handleUndo = () => {
+  const handleUndo = async () => {
     if (todayTotal > 0) {
-      setRecords(prev => {
-        const updated = { ...prev, [today]: Math.max(0, (prev[today] || 0) - 250) }
-        saveData({ goal, records: updated, checkInEnabled })
-        return updated
-      })
+      const newTotal = Math.max(0, todayTotal - 250)
+      setRecords(prev => ({ ...prev, [today]: newTotal }))
+      await saveRecord(today, newTotal)
     }
   }
 
@@ -191,14 +229,23 @@ function App() {
   const weekDates = getWeekDates()
   const maxInWeek = Math.max(...weekDates.map(d => records[d] || 0), goal)
 
-  // 入场动画配置
-  const containerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.1 } },
-  }
+  const containerVariants = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
+  }
+
+  if (!dataReady) {
+    return (
+      <div className="app">
+        <div className="loading-screen">
+          <motion.p
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >加载中...</motion.p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -211,12 +258,20 @@ function App() {
         transition={{ type: 'spring', stiffness: 300, damping: 25 }}
       >
         <h1>健康喝水</h1>
-        <BouncyButton
-          className="settings-btn"
-          onClick={() => { setShowSettings(true); setNewGoal(String(goal)) }}
-        >
-          ⚙
-        </BouncyButton>
+        <div className="header-actions">
+          <BouncyButton className="header-btn" onClick={() => setShowLeaderboard(true)}>
+
+          </BouncyButton>
+          <BouncyButton className="header-btn" onClick={() => setShowLogin(true)}>
+            {user && !user.isAnonymous ? '  ' : ' '}
+          </BouncyButton>
+          <BouncyButton
+            className="settings-btn"
+            onClick={() => { setShowSettings(true); setNewGoal(String(goal)) }}
+          >
+            ⚙
+          </BouncyButton>
+        </div>
       </motion.header>
 
       <motion.main
@@ -249,12 +304,8 @@ function App() {
             </div>
           </div>
           <div className="cup-handle"></div>
-
-          {/* 水滴粒子 */}
           <AnimatePresence>
-            {particles.map(p => (
-              <WaterDrop key={p.id} delay={p.delay} x={p.x} />
-            ))}
+            {particles.map(p => <WaterDrop key={p.id} delay={p.delay} x={p.x} />)}
           </AnimatePresence>
         </motion.div>
 
@@ -274,7 +325,6 @@ function App() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
             >
               {progress >= 1
                 ? '  今日目标已完成！'
@@ -288,10 +338,7 @@ function App() {
                 key={i}
                 className={`cup-icon ${i < cupsCompleted ? 'filled' : ''}`}
                 initial={false}
-                animate={i < cupsCompleted ? {
-                  scale: [1, 1.4, 1],
-                  rotate: [0, 15, -10, 0],
-                } : {}}
+                animate={i < cupsCompleted ? { scale: [1, 1.4, 1], rotate: [0, 15, -10, 0] } : {}}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
               >
                 {i < cupsCompleted ? '  ' : '  '}
@@ -326,7 +373,6 @@ function App() {
           </BouncyButton>
         </motion.div>
 
-        {/* Custom Amount Input */}
         <AnimatePresence>
           {showCustom && (
             <motion.div
@@ -351,10 +397,7 @@ function App() {
         </AnimatePresence>
 
         {/* Weekly Chart */}
-        <motion.section
-          className="weekly-chart"
-          variants={itemVariants}
-        >
+        <motion.section className="weekly-chart" variants={itemVariants}>
           <h2>本周记录</h2>
           <div className="chart">
             {weekDates.map((date, index) => {
@@ -377,12 +420,7 @@ function App() {
                       className={`chart-bar ${isGoalMet ? 'met' : ''}`}
                       initial={{ height: 0 }}
                       animate={{ height: `${height}%` }}
-                      transition={{
-                        type: 'spring',
-                        stiffness: 120,
-                        damping: 15,
-                        delay: 0.2 + index * 0.08,
-                      }}
+                      transition={{ type: 'spring', stiffness: 120, damping: 15, delay: 0.2 + index * 0.08 }}
                     />
                     <div className="goal-line" style={{ bottom: `${(goal / maxInWeek) * 100}%` }}></div>
                   </div>
@@ -394,29 +432,7 @@ function App() {
         </motion.section>
       </motion.main>
 
-      {/* Ripple Animation */}
-      <AnimatePresence>
-        {ripple && (
-          <motion.div
-            className="ripple-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="ripple-content"
-              initial={{ scale: 0.3, opacity: 0 }}
-              animate={{ scale: [0.3, 1.15, 1], opacity: [0, 1, 0] }}
-              transition={{ duration: 0.7, ease: 'easeOut' }}
-            >
-              <span className="ripple-amount">+{ripple}ml</span>
-              <span className="ripple-check">✓</span>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* 目标达成庆祝 */}
+      {/* Celebration */}
       <AnimatePresence>
         {goalReached && progress >= 1 && (
           <motion.div
@@ -442,14 +458,10 @@ function App() {
               <h2>恭喜！</h2>
               <p>今日目标已完成</p>
               <p className="celebration-total">{todayTotal} ml</p>
-              <BouncyButton
-                className="celebration-close"
-                onClick={() => setGoalReached(false)}
-              >
+              <BouncyButton className="celebration-close" onClick={() => setGoalReached(false)}>
                 继续加油
               </BouncyButton>
             </motion.div>
-            {/* 飘落彩带 */}
             {Array.from({ length: 12 }).map((_, i) => (
               <motion.div
                 key={i}
@@ -462,11 +474,7 @@ function App() {
                   rotate: Math.random() * 720 - 360,
                   x: (Math.random() - 0.5) * 200,
                 }}
-                transition={{
-                  duration: 2 + Math.random() * 2,
-                  delay: Math.random() * 0.5,
-                  ease: 'easeIn',
-                }}
+                transition={{ duration: 2 + Math.random() * 2, delay: Math.random() * 0.5, ease: 'easeIn' }}
               >
                 {[' ', ' ', ' ', '✨', ' '][i % 5]}
               </motion.div>
@@ -475,7 +483,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* Pose Check-in Camera */}
+      {/* Pose Check-in */}
       <AnimatePresence>
         {showCamera && (
           <PoseCheckin
@@ -484,6 +492,16 @@ function App() {
             onSkip={handleCheckinSkip}
           />
         )}
+      </AnimatePresence>
+
+      {/* Login */}
+      <AnimatePresence>
+        {showLogin && <LoginPage onClose={() => setShowLogin(false)} />}
+      </AnimatePresence>
+
+      {/* Leaderboard */}
+      <AnimatePresence>
+        {showLeaderboard && <Leaderboard onClose={() => setShowLeaderboard(false)} />}
       </AnimatePresence>
 
       {/* Settings Modal */}
@@ -505,7 +523,6 @@ function App() {
               onClick={e => e.stopPropagation()}
             >
               <h2>设置</h2>
-
               <div className="modal-body">
                 <label className="setting-label">每日目标</label>
                 <input
@@ -519,7 +536,6 @@ function App() {
                 />
                 <p className="hint">建议每日 1500~2500 ml</p>
               </div>
-
               <div className="modal-body">
                 <div className="setting-row">
                   <div>
@@ -536,7 +552,6 @@ function App() {
                   </label>
                 </div>
               </div>
-
               <div className="modal-actions">
                 <BouncyButton className="cancel-btn" onClick={() => setShowSettings(false)}>取消</BouncyButton>
                 <BouncyButton className="confirm-btn" onClick={handleGoalChange}>确定</BouncyButton>
@@ -549,4 +564,10 @@ function App() {
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  )
+}
