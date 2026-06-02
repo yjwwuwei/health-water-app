@@ -25,16 +25,14 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 
-// ============================================
-// 替换为你自己的 Firebase 配置
-// ============================================
+// 配置从 .env 环境变量读取
 const firebaseConfig = {
-  apiKey: "AIzaSyCKbSS3UBsWvVtg-pq1cdw1ItNabCv0dOw",
-  authDomain: "health-water-app-fee03.firebaseapp.com",
-  projectId: "health-water-app-fee03",
-  storageBucket: "health-water-app-fee03.firebasestorage.app",
-  messagingSenderId: "324472833683",
-  appId: "1:324472833683:web:e7f4777dbf29bd02a16f66",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
 const app = initializeApp(firebaseConfig)
