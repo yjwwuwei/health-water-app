@@ -8,7 +8,7 @@ import {
   loadSetting,
   saveSetting,
 } from './db'
-import { syncToCloud, loadFromCloud } from './firebase'
+import { syncToCloud, loadFromCloud, logout } from './firebase'
 import PoseCheckin from './PoseCheckin'
 import LoginPage from './LoginPage'
 import Leaderboard from './Leaderboard'
@@ -85,6 +85,7 @@ function AppContent() {
   const [goalReached, setGoalReached] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const [showLeaderboard, setShowLeaderboard] = useState(false)
+  const [showProfile, setShowProfile] = useState(false)
   const [dataReady, setDataReady] = useState(false)
 
   const today = getToday()
@@ -259,12 +260,28 @@ function AppContent() {
       >
         <h1>健康喝水</h1>
         <div className="header-actions">
-          <BouncyButton className="header-btn" onClick={() => setShowLeaderboard(true)}>
-
+          <BouncyButton className="header-btn" onClick={() => setShowLeaderboard(true)} title="排行榜">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/>
+            </svg>
           </BouncyButton>
-          <BouncyButton className="header-btn" onClick={() => setShowLogin(true)}>
-            {user && !user.isAnonymous ? '  ' : ' '}
-          </BouncyButton>
+          {user && !user.isAnonymous ? (
+            <BouncyButton
+              className="header-btn logged-in"
+              onClick={() => setShowProfile(true)}
+              title="已登录"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+            </BouncyButton>
+          ) : (
+            <BouncyButton className="header-btn" onClick={() => setShowLogin(true)} title="登录">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+              </svg>
+            </BouncyButton>
+          )}
           <BouncyButton
             className="settings-btn"
             onClick={() => { setShowSettings(true); setNewGoal(String(goal)) }}
@@ -440,7 +457,9 @@ function AppContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setGoalReached(false)}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setGoalReached(false)
+            }}
           >
             <motion.div
               className="celebration-content"
@@ -453,7 +472,6 @@ function AppContent() {
                 animate={{ rotate: [0, 15, -15, 10, -10, 0] }}
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
-
               </motion.div>
               <h2>恭喜！</h2>
               <p>今日目标已完成</p>
@@ -462,23 +480,6 @@ function AppContent() {
                 继续加油
               </BouncyButton>
             </motion.div>
-            {Array.from({ length: 12 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="confetti"
-                style={{ left: `${Math.random() * 100}%` }}
-                initial={{ y: -20, opacity: 1, rotate: 0 }}
-                animate={{
-                  y: window.innerHeight + 20,
-                  opacity: [1, 1, 0],
-                  rotate: Math.random() * 720 - 360,
-                  x: (Math.random() - 0.5) * 200,
-                }}
-                transition={{ duration: 2 + Math.random() * 2, delay: Math.random() * 0.5, ease: 'easeIn' }}
-              >
-                {[' ', ' ', ' ', '✨', ' '][i % 5]}
-              </motion.div>
-            ))}
           </motion.div>
         )}
       </AnimatePresence>
@@ -502,6 +503,48 @@ function AppContent() {
       {/* Leaderboard */}
       <AnimatePresence>
         {showLeaderboard && <Leaderboard onClose={() => setShowLeaderboard(false)} />}
+      </AnimatePresence>
+
+      {/* Profile / Logout Menu */}
+      <AnimatePresence>
+        {showProfile && (
+          <motion.div
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowProfile(false)}
+          >
+            <motion.div
+              className="modal profile-modal"
+              initial={{ scale: 0.8, opacity: 0, y: 30 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 30 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="profile-header">
+                <div className="profile-avatar">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" strokeWidth="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <h3>{user?.email || '已登录'}</h3>
+                <p className="profile-uid">数据已同步到云端</p>
+              </div>
+              <div className="modal-actions" style={{ marginTop: 16 }}>
+                <BouncyButton className="cancel-btn" onClick={() => setShowProfile(false)}>关闭</BouncyButton>
+                <BouncyButton
+                  className="logout-btn"
+                  onClick={async () => {
+                    await logout()
+                    setShowProfile(false)
+                  }}
+                >退出登录</BouncyButton>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
 
       {/* Settings Modal */}

@@ -762,6 +762,54 @@ body {
   background: var(--primary-dark);
 }
 
+/* Logged-in button */
+.header-btn.logged-in {
+  background: rgba(102, 187, 106, 0.4);
+}
+
+/* Profile Modal */
+.profile-modal {
+  text-align: center;
+}
+
+.profile-header {
+  margin-bottom: 8px;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #E1F5FE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.profile-header h3 {
+  font-size: 16px;
+  color: var(--text);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.profile-uid {
+  font-size: 13px;
+  color: var(--success);
+}
+
+.logout-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #EF5350;
+  color: white;
+}
+
 /* Water Particles */
 .water-particle {
   position: absolute;
@@ -785,6 +833,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .celebration-content {
@@ -793,6 +842,7 @@ body {
   padding: 32px 40px;
   text-align: center;
   z-index: 251;
+  cursor: default;
 }
 
 .celebration-emoji {
