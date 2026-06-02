@@ -29,12 +29,12 @@ import {
 // 替换为你自己的 Firebase 配置
 // ============================================
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyCKbSS3UBsWvVtg-pq1cdw1ItNabCv0dOw",
+  authDomain: "health-water-app-fee03.firebaseapp.com",
+  projectId: "health-water-app-fee03",
+  storageBucket: "health-water-app-fee03.firebasestorage.app",
+  messagingSenderId: "324472833683",
+  appId: "1:324472833683:web:e7f4777dbf29bd02a16f66",
 }
 
 const app = initializeApp(firebaseConfig)
