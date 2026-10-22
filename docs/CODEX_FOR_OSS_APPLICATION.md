@@ -39,12 +39,21 @@ CI 还提供了 [Android 开发 APK](https://github.com/yjwwuwei/health-water-ap
 | 审核用开发分支 | https://github.com/yjwwuwei/health-water-app/tree/codex/v3-rebuild |
 | 角色 | 主要维护者 |
 | 申请范围 | ChatGPT Pro；API 额度及 Codex Security 不勾选 |
-| 组织 ID、API 用途 | 不申请 API，不填写 |
-| 表单状态 | 尚未填写、提交；操作工具没有可连接浏览器，内置浏览器不可用 |
+| OpenAI 组织 ID | 当前表单仍要求填写；从 [API 平台组织设置](https://platform.openai.com/settings/organization/general)复制申请者真实的 Organization ID，仅填写到官方表单 |
+| API 用途 | 当前表单仍要求填写；如实说明只申请 ChatGPT Pro with Codex，当前不申请 API 额度，见下方补充文案 |
+| 表单状态 | 用户已开始手动填写，画面显示两个必填字段尚未完成；尚无提交成功回执。本会话仍无法连接浏览器 |
 
 [官方项目说明](https://developers.openai.com/community/codex-for-oss)、[项目条款](https://learn.chatgpt.com/docs/codex-for-oss-terms)及[申请表](https://openai.com/zh-Hans-CN/form/codex-for-oss/)已核对。是否入选由官方审核决定，文案不承诺通过。
 
 ## 可复制文案
+
+2026-10-22 填表修正：用户提供的表单画面显示，即使未勾选 API 额度，组织 ID 和 API 用途仍触发必填校验；官方申请页也将这两项标为必填。此前建议留空不准确。继续保持 API 额度与 Codex Security 不勾选；组织 ID 填真实值，API 用途使用以下说明。这是按当前表单要求给出的如实填写建议，不代表已经验证提交成功。
+
+API 用途（178/500 字符）：
+
+```text
+Not applicable. I am applying for ChatGPT Pro with Codex only, not API credits. I plan to use Codex for regression tests, code review and release maintenance of health-water-app.
+```
 
 以下中英文二选一。项目理由及补充说明均控制在表单各 500 字符限制内，开发分支及 MIT 许可已确认可公开访问。
 
@@ -82,6 +91,6 @@ Source, MIT license and evidence: https://github.com/yjwwuwei/health-water-app/t
 
 ## 提交状态
 
-本次已获得维护者对 MIT、公开开发分支以及可操作时代交申请的授权。浏览器工具返回空应用/浏览器列表，尝试创建内置浏览器标签也返回不可用，因此没有输入身份资料或点击提交。
+本次已获得维护者对 MIT、公开开发分支以及可操作时代交申请的授权。浏览器工具返回空应用/浏览器列表，尝试创建内置浏览器标签也返回不可用，因此代理没有输入身份资料或点击提交。随后用户开始手动填表，提供的画面显示组织 ID 与 API 用途被要求填写，尚无提交成功回执。
 
 公开提交、MIT 许可和验收证据现已可供审核；远程 CI 全部通过。最终文档更新仅记录公开结果，源代码和 CI 配置保持为上述已通过检查的版本。只有看到官方提交成功回执，才将申请状态改为已提交。

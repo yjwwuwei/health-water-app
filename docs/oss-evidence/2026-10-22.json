@@ -177,9 +177,27 @@
       {
         "key": "notes_en",
         "characters": 441
+      },
+      {
+        "key": "api_usage_en",
+        "characters": 178
       }
     ],
-    "preparation_status": "ready_with_public_development_branch_and_passing_ci"
+    "preparation_status": "ready_with_public_development_branch_and_passing_ci",
+    "form_validation_update": {
+      "date": "2026-10-22",
+      "evidence": "User-provided form screenshot and current official application page",
+      "optional_api_credit_checkbox_checked": false,
+      "required_fields_reported": [
+        "OpenAI organization ID",
+        "API credit usage"
+      ],
+      "correction": "Earlier guidance to leave these fields blank was inaccurate. Use the applicant's real organization ID and a truthful Pro-only explanation.",
+      "organization_settings_url": "https://platform.openai.com/settings/organization/general",
+      "manual_entry_started": true,
+      "submission_success_confirmed": false
+    },
+    "api_usage_text": "Not applicable. I am applying for ChatGPT Pro with Codex only, not API credits. I plan to use Codex for regression tests, code review and release maintenance of health-water-app."
   },
   "release_gates": [
     "Old signing key and real in-place upgrade remain unverified",
