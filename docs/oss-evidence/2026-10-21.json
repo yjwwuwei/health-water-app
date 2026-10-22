@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "repository": {
+    "url": "https://github.com/yjwwuwei/health-water-app",
+    "default_branch": "main",
+    "head_sha": "998e170cbac7663e853fc2b13f223963df55c7c1",
+    "public": true,
+    "fork": false,
+    "stars": 0,
+    "forks": 0,
+    "pushed_at_utc": "2026-06-02T08:31:20Z",
+    "github_detected_license": null,
+    "explicit_root_license_file_found": false,
+    "github_release_count": 0,
+    "issues_all_states_count": 0,
+    "pull_requests_all_states_count": 0,
+    "historical_apk_files": [
+      {
+        "path": "releases/健康喝水-v1.0.0.apk",
+        "size_bytes": 4217173,
+        "blob_sha": "e943aa964f788055084df54cad1880be3e79f82b"
+      },
+      {
+        "path": "releases/健康喝水-v1.1.0.apk",
+        "size_bytes": 4699699,
+        "blob_sha": "6d159a0b3c62f861eae0729564419acf6048c9a9"
+      },
+      {
+        "path": "releases/健康喝水-v1.1.1.apk",
+        "size_bytes": 4699811,
+        "blob_sha": "5129d7d087380832fa3604790e0e0503eabd8b06"
+      },
+      {
+        "path": "releases/健康喝水-v1.2.0.apk",
+        "size_bytes": 4700615,
+        "blob_sha": "708c1efbf1742f59b0f927e1766381236370b40c"
+      },
+      {
+        "path": "releases/健康喝水-v1.3.0.apk",
+        "size_bytes": 4749639,
+        "blob_sha": "ea960df6b789028efeb3c3cf8f700296a391ae8a"
+      },
+      {
+        "path": "releases/健康喝水-v2.0.0.apk",
+        "size_bytes": 4877715,
+        "blob_sha": "c2c8318994fc0969bd5731106c7bfbfdd30be639"
+      },
+      {
+        "path": "releases/健康喝水-v2.0.1.apk",
+        "size_bytes": 4878279,
+        "blob_sha": "e2e736ae3fded90e13150df1521bc8dc001a6786"
+      }
+    ],
+    "latest_workflow_run": {
+      "url": "https://github.com/yjwwuwei/health-water-app/actions/runs/26808110331",
+      "created_at": "2026-06-02T08:31:10Z",
+      "head_sha": "998e170cbac7663e853fc2b13f223963df55c7c1",
+      "conclusion": "success"
+    }
+  },
+  "maintenance_source": {
+    "title": "全面检查喝水App并提出优化",
+    "thread_id": "01a15f00-f135-7f73-8b09-1e79dae5c39e",
+    "status_at_read": "completed",
+    "scope": "Completed review and maintenance recommendations; no application source changes. This application task reuses the recommendations and evidence without starting development work.",
+    "captured_on": "2026-10-21",
+    "review_turn_id": "01a15f02-005d-7bc1-9f65-672b4fbfe3ec",
+    "source_final_message_id": "msg_064b4d50eea19c83016ad8d84b9d30819b8be6521db9a083b8",
+    "recommended_implementation_order": [
+      "先修发布与数据错误",
+      "建立逐笔记录及迁移测试",
+      "重做首页和提醒",
+      "最后恢复云同步、榜单及姿势识别"
+    ],
+    "additional_findings_in_final_review": [
+      "Account isolation is missing from the date-keyed local data model; remediation is recommended, not completed.",
+      "Private user records and public leaderboard summaries need separate access design and rules testing; no claim of confirmed production leakage.",
+      "Camera, mobile layout and real multi-device sync remain unverified."
+    ]
+  },
+  "checks": [
+    {
+      "id": "build",
+      "command": "npm run build",
+      "source_item_id": "exec-33fe3464-5e53-44ef-a613-9bcbfaff1048",
+      "exit_code": 0,
+      "output_truncated": false,
+      "limitation": "Reused captured maintenance-task output; existing installed dependencies. Not a clean npm ci or Android build.",
+      "output": "\n> health-water-app@0.0.0 build\n> vite build\n\nvite v8.0.14 building client environment for production...\n\rtransforming...✓ 2128 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                               1.01 kB │ gzip:   0.56 kB\ndist/assets/index-DmAAE9-b.css               14.87 kB │ gzip:   3.53 kB\ndist/assets/dist-nKXV3G-2.js                134.86 kB │ gzip:  33.26 kB\ndist/assets/shared-CuaV8nwI.js              167.59 kB │ gzip:  39.69 kB\ndist/assets/Unique_impl-BrfPZAfw.js         235.82 kB │ gzip:  72.30 kB\ndist/assets/pose-detection.esm-CBVwL9Mb.js  351.71 kB │ gzip:  84.32 kB\ndist/assets/index-Aoz80jfF.js               692.31 kB │ gzip: 214.62 kB\ndist/assets/dist-BgMCENtA.js                693.53 kB │ gzip: 170.00 kB\n\n✓ built in 427ms\n[plugin builtin:vite-reporter] \n(!) Some chunks are larger than 500 kB after minification. Consider:\n- Using dynamic import() to code-split the application\n- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting\n- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.\n"
+    },
+    {
+      "id": "lint_summary",
+      "command": "ESLint.lintFiles(['.']) with source/generated-file aggregation",
+      "source_item_id": "exec-b422668a-8ccc-451b-85c2-51d4655209ac",
+      "exit_code": 0,
+      "output_truncated": false,
+      "limitation": "1095 total errors include generated Android assets; 10 are in application source.",
+      "output": "[BABEL] Note: The code generator has deoptimised the styling of D:\\renwu\\自己做的小东西\\健康喝水app\\android\\app\\src\\main\\assets\\public\\assets\\dist-BgMCENtA.js as it exceeds the max of 500KB.\n[BABEL] Note: The code generator has deoptimised the styling of D:\\renwu\\自己做的小东西\\健康喝水app\\android\\app\\src\\main\\assets\\public\\assets\\index-Aoz80jfF.js as it exceeds the max of 500KB.\n{\n  \"files\": 21,\n  \"errors\": 1095,\n  \"warnings\": 0,\n  \"androidFiles\": 9,\n  \"source\": [\n    {\n      \"file\": \"D:\\\\renwu\\\\自己做的小东西\\\\健康喝水app\\\\src\\\\App.jsx\",\n      \"errors\": 1,\n      \"warnings\": 0,\n      \"messages\": [\n        {\n          \"line\": 157,\n          \"rule\": \"react-hooks/set-state-in-effect\",\n          \"message\": \"Error: Calling setState synchronously within an effect can trigger cascading renders\\n\\nEffects are intended to synchronize state between React and external syste\"\n        }\n      ]\n    },\n    {\n      \"file\": \"D:\\\\renwu\\\\自己做的小东西\\\\健康喝水app\\\\src\\\\AuthContext.jsx\",\n      \"errors\": 1,\n      \"warnings\": 0,\n      \"messages\": [\n        {\n          \"line\": 25,\n          \"rule\": \"react-refresh/only-export-components\",\n          \"message\": \"Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.\"\n        }\n      ]\n    },\n    {\n      \"file\": \"D:\\\\renwu\\\\自己做的小东西\\\\健康喝水app\\\\src\\\\firebase.js\",\n      \"errors\": 5,\n      \"warnings\": 0,\n      \"messages\": [\n        {\n          \"line\": 9,\n          \"rule\": \"no-unused-vars\",\n          \"message\": \"'RecaptchaVerifier' is defined but never used.\"\n        },\n        {\n          \"line\": 21,\n          \"rule\": \"no-unused-vars\",\n          \"message\": \"'query' is defined but never used.\"\n        },\n        {\n          \"line\": 22,\n          \"rule\": \"no-unused-vars\",\n          \"message\": \"'where' is defined but never used.\"\n        },\n        {\n          \"line\": 23,\n          \"rule\": \"no-unused-vars\",\n          \"message\": \"'orderBy' is defined but never used.\"\n        },\n        {\n          \"line\": 24,\n          \"rule\": \"no-unused-vars\",\n          \"message\": \"'limit' is defined but never used.\"\n        }\n      ]\n    },\n    {\n      \"file\": \"D:\\\\renwu\\\\自己做的小东西\\\\健康喝水app\\\\src\\\\PoseCheckin.jsx\",\n      \"errors\": 3,\n      \"warnings\": 0,\n      \"messages\": [\n        {\n          \"line\": 87,\n          \"rule\": \"react-hooks/immutability\",\n          \"message\": \"Error: Cannot access variable before it is declared\\n\\n`detect` is accessed before it is declared, which prevents the earlier access from updating when this value\"\n        },\n        {\n          \"line\": 145,\n          \"rule\": \"no-unused-vars\",\n          \"message\": \"'e' is defined but never used.\"\n        },\n        {\n          \"line\": 145,\n          \"rule\": \"no-empty\",\n          \"message\": \"Empty block statement.\"\n        }\n      ]\n    }\n  ]\n}\n"
+    },
+    {
+      "id": "date_and_configuration",
+      "command": "Source-function replay with fixed Shanghai date; missing-config initialization probe",
+      "source_item_id": "exec-c9421e25-5b01-4b90-a9d7-415b37f572f7",
+      "exit_code": 0,
+      "output_truncated": false,
+      "limitation": "Isolated probes, not browser or device end-to-end tests.",
+      "output": "{\n  \"bundle\": [\n    {\n      \"file\": \"dist-BgMCENtA.js\",\n      \"bytes\": 693536\n    },\n    {\n      \"file\": \"dist-nKXV3G-2.js\",\n      \"bytes\": 134863\n    },\n    {\n      \"file\": \"index-Aoz80jfF.js\",\n      \"bytes\": 692318\n    },\n    {\n      \"file\": \"pose-detection.esm-CBVwL9Mb.js\",\n      \"bytes\": 351710\n    },\n    {\n      \"file\": \"shared-CuaV8nwI.js\",\n      \"bytes\": 167593\n    },\n    {\n      \"file\": \"Unique_impl-BrfPZAfw.js\",\n      \"bytes\": 235822\n    }\n  ],\n  \"totalJSBytes\": 2275842,\n  \"wasm\": []\n}\nunconfiguredFirebaseError: auth/invalid-api-key\ndateAtShanghai0130: 2026-10-20\n"
+    },
+    {
+      "id": "correctness_reproductions",
+      "command": "Replay selected App.jsx and PoseCheckin.jsx logic using fixtures",
+      "source_item_id": "exec-c7874c3d-ad91-44b6-95a9-3666f62b012f",
+      "exit_code": 0,
+      "output_truncated": false,
+      "limitation": "Synthetic values; these are reproduced defects, not fixes.",
+      "output": "{\n  \"celebrationAfterDismissAndEffect\": true,\n  \"undoAfter100Then500\": 350,\n  \"expectedUndo\": 100,\n  \"sync\": {\n    \"localBefore\": 1500,\n    \"cloud\": 1000,\n    \"displayAfterMerge\": 1500,\n    \"persistedByCloudLoop\": 1000\n  }\n}\nposeHorizontalTolerancePixels 0.25 exampleHand20pxFromNoseDetected false\n"
+    },
+    {
+      "id": "sync_and_leaderboard_cost",
+      "command": "Mock Firestore call counters around source functions",
+      "source_item_id": "exec-8dea2747-831e-4698-9274-0f52f8bd17c4",
+      "exit_code": 0,
+      "output_truncated": false,
+      "limitation": "100 users and 365 records are synthetic fixtures, not measured users or production traffic.",
+      "output": "{\n  \"syncWith365Days\": {\n    \"writes\": 366,\n    \"records\": 365\n  },\n  \"leaderboardWith100Users365Days\": {\n    \"queries\": 101,\n    \"documentReads\": 36600,\n    \"returnedEntries\": 20\n  }\n}\n"
+    },
+    {
+      "id": "android_toolchain",
+      "command": ".\\gradlew.bat --version",
+      "source_item_id": "exec-3da51381-9905-4a81-b1bb-aba0db9824ee",
+      "exit_code": 1,
+      "output_truncated": false,
+      "limitation": "Failed before build because JAVA_HOME points to a missing JDK; no Android build or device validation.",
+      "output": " \r\nERROR: JAVA_HOME is set to an invalid directory: C:\\Program Files\\Java\\jdk-23 \r\n \r\nPlease set the JAVA_HOME variable in your environment to match the \r\nlocation of your Java installation. \r\n"
+    },
+    {
+      "id": "deployed_assets",
+      "command": "HTTP requests to HTML-referenced assets and the repository-prefixed JavaScript asset",
+      "source_item_id": "exec-856ee1f3-208f-4717-a115-93b9a4a1ef9c",
+      "exit_code": 0,
+      "output_truncated": false,
+      "limitation": "Historical successful deployment workflow does not demonstrate a working application.",
+      "output": "{\"Url\":\"https://yjwwuwei.github.io/assets/index-C4DYFs7z.js\",\"Status\":404,\"ContentType\":\"text/html; charset=utf-8\",\"UndefinedFirebaseKey\":false,\"FirebaseKeyAssignment\":null}\r\n{\"Url\":\"https://yjwwuwei.github.io/assets/index-DmAAE9-b.css\",\"Status\":404,\"ContentType\":\"text/html; charset=utf-8\",\"UndefinedFirebaseKey\":false,\"FirebaseKeyAssignment\":null}\r\n{\"Url\":\"https://yjwwuwei.github.io/manifest.json\",\"Status\":404,\"ContentType\":\"text/html; charset=utf-8\",\"UndefinedFirebaseKey\":false,\"FirebaseKeyAssignment\":null}\r\n{\"Url\":\"https://yjwwuwei.github.io/sw.js\",\"Status\":404,\"ContentType\":\"text/html; charset=utf-8\",\"UndefinedFirebaseKey\":false,\"FirebaseKeyAssignment\":null}\r\n{\"Url\":\"https://yjwwuwei.github.io/health-water-app/assets/index-C4DYFs7z.js\",\"Status\":200,\"ContentType\":\"application/javascript; charset=utf-8\",\"UndefinedFirebaseKey\":true,\"FirebaseKeyAssignment\":[\"apiKey:<redacted>\",\"apiKey:<redacted>\",\"apiKey:<redacted>\",\"apiKey:<redacted>\",\"apiKey:<redacted>\",\"apiKey:<redacted>\",\"apiKey:<redacted>\",\"apiKey:void 0\"]}\r\n"
+    },
+    {
+      "id": "dependency_audit",
+      "command": "npm audit --json --registry=https://registry.npmjs.org --fetch-timeout=15000 --fetch-retries=0",
+      "source_item_id": "exec-24cefdca-2ff7-47cd-960f-f135bdd11f48",
+      "exit_code": 0,
+      "output_truncated": false,
+      "limitation": "Counts are affected dependency entries, including transitive/build dependencies. Wrapper exit 0 is not an audit pass; the direct audit command exited 1.",
+      "output": "{\n  \"counts\": {\n    \"info\": 0,\n    \"low\": 0,\n    \"moderate\": 5,\n    \"high\": 13,\n    \"critical\": 3,\n    \"total\": 21\n  },\n  \"packages\": [\n    {\n      \"name\": \"@capacitor/android\",\n      \"severity\": \"critical\",\n      \"direct\": true\n    },\n    {\n      \"name\": \"@firebase/firestore\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"@firebase/firestore-compat\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"@grpc/grpc-js\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"@tensorflow/tfjs\",\n      \"severity\": \"moderate\",\n      \"direct\": true\n    },\n    {\n      \"name\": \"@xmldom/xmldom\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"argparse\",\n      \"severity\": \"moderate\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"baseline-browser-mapping\",\n      \"severity\": \"moderate\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"brace-expansion\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"browserslist\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"firebase\",\n      \"severity\": \"high\",\n      \"direct\": true\n    },\n    {\n      \"name\": \"form-data\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"nanoid\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"postcss\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"protobufjs\",\n      \"severity\": \"moderate\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"sharp\",\n      \"severity\": \"high\",\n      \"direct\": true\n    },\n    {\n      \"name\": \"source-map-js\",\n      \"severity\": \"high\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"sprintf-js\",\n      \"severity\": \"moderate\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"tar\",\n      \"severity\": \"critical\",\n      \"direct\": false\n    },\n    {\n      \"name\": \"vite\",\n      \"severity\": \"high\",\n      \"direct\": true\n    },\n    {\n      \"name\": \"websocket-driver\",\n      \"severity\": \"critical\",\n      \"direct\": false\n    }\n  ]\n}"
+    }
+  ],
+  "official_sources": [
+    "https://openai.com/zh-Hans-CN/form/codex-for-oss/",
+    "https://developers.openai.com/community/codex-for-oss",
+    "https://learn.chatgpt.com/docs/codex-for-oss-terms"
+  ],
+  "public_evidence_sources": [
+    "https://api.github.com/repos/yjwwuwei/health-water-app",
+    "https://api.github.com/repos/yjwwuwei/health-water-app/releases?per_page=20",
+    "https://api.github.com/repos/yjwwuwei/health-water-app/issues?state=all&per_page=100",
+    "https://api.github.com/repos/yjwwuwei/health-water-app/pulls?state=all&per_page=100",
+    "https://api.github.com/repos/yjwwuwei/health-water-app/git/trees/998e170cbac7663e853fc2b13f223963df55c7c1?recursive=1",
+    "https://api.github.com/repos/yjwwuwei/health-water-app/actions/runs?per_page=10"
+  ]
+}
+

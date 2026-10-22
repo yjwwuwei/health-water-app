@@ -1,0 +1,985 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-21T18:04:47.968Z",
+  "timezone": "Asia/Shanghai",
+  "branch": "codex/v3-rebuild",
+  "baseline": "998e170cbac7663e853fc2b13f223963df55c7c1",
+  "environment": {
+    "node": "v24.15.0",
+    "npm": "11.12.1",
+    "model": "gpt-6-astra",
+    "reasoningEffort": "max",
+    "modelEvidence": {
+      "source": "current session turn_context",
+      "turnId": "01a15f99-e4cd-7033-bb37-da46403070d1",
+      "timestamp": "2026-10-21T17:57:07.316Z"
+    }
+  },
+  "inputs": {
+    "package.json": "0bbf351631e7b4d52bea169e3db9e16a51d8dfc48fce1fe3e79553ba10767df3",
+    "package-lock.json": "dda35e53d2b23f54f32509ec8fca79a7a2176122575432804dad5eabf25430f7",
+    "firebase.json": "f99b1de5d92cc285c99c95ce13158282062241d3d30fd874bc82749abeb90f7a",
+    "vite.config.ts": "685d05732fa8b701ccdcf6813207094e5c024c19460d0b5a3877c1628ac714c2"
+  },
+  "counts": {
+    "interpretation": "npm package-level alerts, not independent vulnerabilities; uuid has two installed nodes",
+    "before": {
+      "info": 0,
+      "low": 0,
+      "moderate": 6,
+      "high": 3,
+      "critical": 0,
+      "total": 9
+    },
+    "after": {
+      "info": 0,
+      "low": 0,
+      "moderate": 6,
+      "high": 3,
+      "critical": 0,
+      "total": 9
+    },
+    "production": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "uniqueAdvisories": 3,
+    "affectedInstalledPaths": 10,
+    "bundledCopyExcludedFromNpmCount": "Vite 8.3.5 embeds braces 3.0.3 and patched chokidar 3.6.0; same braces advisory assessed separately"
+  },
+  "packageAlerts": [
+    {
+      "name": "@capacitor/cli",
+      "severity": "moderate",
+      "direct": true,
+      "advisoryIds": [
+        "GHSA-w5hq-g745-h8pq"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/@capacitor/cli",
+          "version": "8.5.3",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "@capacitor/cli",
+        "version": "8.4.3",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "@google-cloud/pubsub",
+      "severity": "moderate",
+      "direct": false,
+      "advisoryIds": [
+        "GHSA-8988-4f7v-96qf"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/@google-cloud/pubsub",
+          "version": "5.3.1",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "firebase-tools",
+        "version": "14.23.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "@opentelemetry/core",
+      "severity": "moderate",
+      "direct": false,
+      "advisoryIds": [
+        "GHSA-8988-4f7v-96qf"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/@opentelemetry/core",
+          "version": "1.30.1",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "firebase-tools",
+        "version": "14.23.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "braces",
+      "severity": "high",
+      "direct": false,
+      "advisoryIds": [
+        "GHSA-vfj7-8cjw-p6xm"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/braces",
+          "version": "3.0.3",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "firebase-tools",
+        "version": "14.23.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "chokidar",
+      "severity": "high",
+      "direct": false,
+      "advisoryIds": [
+        "GHSA-vfj7-8cjw-p6xm"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/chokidar",
+          "version": "3.6.0",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "firebase-tools",
+        "version": "14.23.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "firebase-tools",
+      "severity": "high",
+      "direct": true,
+      "advisoryIds": [
+        "GHSA-8988-4f7v-96qf",
+        "GHSA-vfj7-8cjw-p6xm",
+        "GHSA-w5hq-g745-h8pq"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/firebase-tools",
+          "version": "15.34.0",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "firebase-tools",
+        "version": "14.23.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "gaxios",
+      "severity": "moderate",
+      "direct": false,
+      "advisoryIds": [
+        "GHSA-w5hq-g745-h8pq"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/gaxios",
+          "version": "6.7.1",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "firebase-tools",
+        "version": "14.23.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "uuid",
+      "severity": "moderate",
+      "direct": false,
+      "advisoryIds": [
+        "GHSA-w5hq-g745-h8pq"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/uuid",
+          "version": "9.0.1",
+          "dev": true
+        },
+        {
+          "path": "node_modules/xcode/node_modules/uuid",
+          "version": "7.0.3",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "@capacitor/cli",
+        "version": "8.4.3",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "xcode",
+      "severity": "moderate",
+      "direct": false,
+      "advisoryIds": [
+        "GHSA-w5hq-g745-h8pq"
+      ],
+      "nodes": [
+        {
+          "path": "node_modules/xcode",
+          "version": "3.0.1",
+          "dev": true
+        }
+      ],
+      "auditSuggestedFixNotApplied": {
+        "name": "@capacitor/cli",
+        "version": "8.4.3",
+        "isSemVerMajor": true
+      }
+    }
+  ],
+  "advisoryMetadata": [
+    {
+      "checkedAt": "2026-10-21T18:00:56.747Z",
+      "apiUrl": "https://api.github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+      "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+      "ghsaId": "GHSA-vfj7-8cjw-p6xm",
+      "cveId": "CVE-2026-93687",
+      "severity": "high",
+      "updatedAt": "2026-10-02T22:36:34Z",
+      "withdrawnAt": null,
+      "vulnerabilities": [
+        {
+          "package": {
+            "ecosystem": "npm",
+            "name": "braces"
+          },
+          "vulnerable_version_range": "<= 3.0.3",
+          "first_patched_version": null,
+          "vulnerable_functions": []
+        }
+      ]
+    },
+    {
+      "checkedAt": "2026-10-21T18:00:56.635Z",
+      "apiUrl": "https://api.github.com/advisories/GHSA-8988-4f7v-96qf",
+      "url": "https://github.com/advisories/GHSA-8988-4f7v-96qf",
+      "ghsaId": "GHSA-8988-4f7v-96qf",
+      "cveId": "CVE-2026-54285",
+      "severity": "medium",
+      "updatedAt": "2026-09-01T17:41:32Z",
+      "withdrawnAt": null,
+      "vulnerabilities": [
+        {
+          "package": {
+            "ecosystem": "npm",
+            "name": "@opentelemetry/core"
+          },
+          "vulnerable_version_range": "< 2.8.0",
+          "first_patched_version": "2.8.0",
+          "vulnerable_functions": []
+        }
+      ]
+    },
+    {
+      "checkedAt": "2026-10-21T18:00:56.741Z",
+      "apiUrl": "https://api.github.com/advisories/GHSA-w5hq-g745-h8pq",
+      "url": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+      "ghsaId": "GHSA-w5hq-g745-h8pq",
+      "cveId": "CVE-2026-41907",
+      "severity": "medium",
+      "updatedAt": "2026-05-21T18:25:57Z",
+      "withdrawnAt": null,
+      "vulnerabilities": [
+        {
+          "package": {
+            "ecosystem": "npm",
+            "name": "uuid"
+          },
+          "vulnerable_version_range": ">= 12.0.0, < 12.0.1",
+          "first_patched_version": "12.0.1",
+          "vulnerable_functions": []
+        },
+        {
+          "package": {
+            "ecosystem": "npm",
+            "name": "uuid"
+          },
+          "vulnerable_version_range": ">= 13.0.0, < 13.0.1",
+          "first_patched_version": "13.0.1",
+          "vulnerable_functions": []
+        },
+        {
+          "package": {
+            "ecosystem": "npm",
+            "name": "uuid"
+          },
+          "vulnerable_version_range": "< 11.1.1",
+          "first_patched_version": "11.1.1",
+          "vulnerable_functions": []
+        }
+      ]
+    }
+  ],
+  "registry": [
+    {
+      "name": "firebase-tools",
+      "url": "https://registry.npmjs.org/firebase-tools",
+      "checkedAt": "2026-10-21T17:58:50.215Z",
+      "etag": "W/\"d5a66706fd2e85c6474dc6edeb900733\"",
+      "latest": "15.34.0",
+      "maximumStable": "15.34.0",
+      "ranges": [
+        {
+          "range": "^15.8.0",
+          "maximumCompatible": "15.34.0"
+        }
+      ],
+      "versions": [
+        {
+          "version": "15.34.0",
+          "dependencies": {
+            "gaxios": "^6.7.0",
+            "chokidar": "^3.6.0",
+            "@google-cloud/pubsub": "^5.2.0"
+          },
+          "engines": {
+            "node": ">=20.0.0 || >=22.0.0 || >=24.0.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@capacitor/cli",
+      "url": "https://registry.npmjs.org/%40capacitor%2Fcli",
+      "checkedAt": "2026-10-21T17:58:50.283Z",
+      "etag": "W/\"66c93f704658215fdcde5560480b5084\"",
+      "latest": "8.5.3",
+      "maximumStable": "8.5.3",
+      "ranges": [
+        {
+          "range": "8.5.3",
+          "maximumCompatible": "8.5.3"
+        }
+      ],
+      "versions": [
+        {
+          "version": "8.5.3",
+          "dependencies": {
+            "xcode": "^3.0.1"
+          },
+          "engines": {
+            "node": ">=22.0.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@google-cloud/pubsub",
+      "url": "https://registry.npmjs.org/%40google-cloud%2Fpubsub",
+      "checkedAt": "2026-10-21T17:58:49.887Z",
+      "etag": "W/\"251179cc04808fbfa59c75a905d96f1d\"",
+      "latest": "6.3.1",
+      "maximumStable": "6.3.1",
+      "ranges": [
+        {
+          "range": "^5.2.0",
+          "maximumCompatible": "5.3.1"
+        }
+      ],
+      "versions": [
+        {
+          "version": "5.3.1",
+          "dependencies": {
+            "@opentelemetry/core": "^1.30.1"
+          },
+          "engines": {
+            "node": ">=18"
+          }
+        },
+        {
+          "version": "6.3.1",
+          "dependencies": {
+            "@opentelemetry/core": "^2.8.0"
+          },
+          "engines": {
+            "node": ">=22"
+          }
+        }
+      ]
+    },
+    {
+      "name": "@opentelemetry/core",
+      "url": "https://registry.npmjs.org/%40opentelemetry%2Fcore",
+      "checkedAt": "2026-10-21T17:58:51.050Z",
+      "etag": "W/\"ffd3d6e409248b1cd125a8a872503485\"",
+      "latest": "3.0.0",
+      "maximumStable": "3.0.0",
+      "ranges": [
+        {
+          "range": "^1.30.1",
+          "maximumCompatible": "1.30.1"
+        }
+      ],
+      "versions": [
+        {
+          "version": "1.30.1",
+          "dependencies": {},
+          "engines": {
+            "node": ">=14"
+          }
+        },
+        {
+          "version": "3.0.0",
+          "dependencies": {},
+          "engines": {
+            "node": ">=22.15.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "braces",
+      "url": "https://registry.npmjs.org/braces",
+      "checkedAt": "2026-10-21T17:58:49.672Z",
+      "etag": "W/\"3e3a946123da28af93b8e5b9c695b678\"",
+      "latest": "3.0.3",
+      "maximumStable": "3.0.3",
+      "ranges": [
+        {
+          "range": "~3.0.2",
+          "maximumCompatible": "3.0.3"
+        }
+      ],
+      "versions": [
+        {
+          "version": "3.0.3",
+          "dependencies": {},
+          "engines": {
+            "node": ">=8"
+          }
+        }
+      ]
+    },
+    {
+      "name": "chokidar",
+      "url": "https://registry.npmjs.org/chokidar",
+      "checkedAt": "2026-10-21T17:58:49.754Z",
+      "etag": "W/\"f52ebab80bc95845e09b9357669b9edf\"",
+      "latest": "6.0.0",
+      "maximumStable": "6.0.0",
+      "ranges": [
+        {
+          "range": "^3.6.0",
+          "maximumCompatible": "3.6.0"
+        }
+      ],
+      "versions": [
+        {
+          "version": "3.6.0",
+          "dependencies": {
+            "braces": "~3.0.2"
+          },
+          "engines": {
+            "node": ">= 8.10.0"
+          }
+        },
+        {
+          "version": "6.0.0",
+          "dependencies": {},
+          "engines": {
+            "node": ">= 22.22"
+          }
+        }
+      ]
+    },
+    {
+      "name": "gaxios",
+      "url": "https://registry.npmjs.org/gaxios",
+      "checkedAt": "2026-10-21T17:58:49.809Z",
+      "etag": "W/\"5188b80ceea1df21b2f3d081b920fca0\"",
+      "latest": "8.3.1",
+      "maximumStable": "8.3.1",
+      "ranges": [
+        {
+          "range": "^6.7.0",
+          "maximumCompatible": "6.7.1"
+        }
+      ],
+      "versions": [
+        {
+          "version": "6.7.1",
+          "dependencies": {
+            "uuid": "^9.0.1"
+          },
+          "engines": {
+            "node": ">=14"
+          }
+        },
+        {
+          "version": "8.3.1",
+          "dependencies": {},
+          "engines": {
+            "node": ">=22"
+          }
+        }
+      ]
+    },
+    {
+      "name": "uuid",
+      "url": "https://registry.npmjs.org/uuid",
+      "checkedAt": "2026-10-21T17:58:49.750Z",
+      "etag": "W/\"82896819af99edfa230b73361770f85e\"",
+      "latest": "14.0.3",
+      "maximumStable": "14.0.3",
+      "ranges": [
+        {
+          "range": "^9.0.1",
+          "maximumCompatible": "9.0.1"
+        },
+        {
+          "range": "^7.0.3",
+          "maximumCompatible": "7.0.3"
+        }
+      ],
+      "versions": [
+        {
+          "version": "9.0.1",
+          "deprecated": "uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).",
+          "dependencies": {}
+        },
+        {
+          "version": "7.0.3",
+          "deprecated": "uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).",
+          "dependencies": {}
+        },
+        {
+          "version": "14.0.3",
+          "dependencies": {}
+        }
+      ]
+    },
+    {
+      "name": "xcode",
+      "url": "https://registry.npmjs.org/xcode",
+      "checkedAt": "2026-10-21T17:58:50.398Z",
+      "etag": "W/\"d3512e9af74425c9f62ab46a8e3b09a7\"",
+      "latest": "4.0.0",
+      "maximumStable": "4.0.0",
+      "ranges": [
+        {
+          "range": "^3.0.1",
+          "maximumCompatible": "3.0.1"
+        }
+      ],
+      "versions": [
+        {
+          "version": "3.0.1",
+          "dependencies": {
+            "uuid": "^7.0.3"
+          },
+          "engines": {
+            "node": ">=10.0.0"
+          }
+        },
+        {
+          "version": "4.0.0",
+          "dependencies": {},
+          "engines": {
+            "node": ">=14.17.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "vite",
+      "url": "https://registry.npmjs.org/vite",
+      "checkedAt": "2026-10-21T18:00:26.860Z",
+      "etag": "W/\"2416181db5f4913f269a6b57d1a11d10\"",
+      "latest": "8.3.5",
+      "ranges": [
+        {
+          "range": "8.3.5",
+          "maximumCompatible": "8.3.5"
+        }
+      ],
+      "versions": [
+        {
+          "version": "8.3.5",
+          "dependencies": {}
+        }
+      ]
+    }
+  ],
+  "callSiteEvidence": [
+    {
+      "file": "node_modules/firebase-tools/lib/emulator/firestoreEmulator.js",
+      "sha256": "242e2d443427838ea720e6b646c3f57e522b6789271837d79c05108a94cde00e",
+      "lineRanges": [
+        [
+          1,
+          45
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/chokidar/index.js",
+      "sha256": "18ce2effe87d6379aa1d3756e5694c57c72cf97804056d688499a2bffcec66fd",
+      "lineRanges": [
+        [
+          240,
+          269
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/braces/lib/expand.js",
+      "sha256": "41ccc196ebfa7b7781a634e721eb744e4e7bcb54cba427a7e3d6806a1b9e58f7",
+      "lineRanges": [
+        [
+          94,
+          110
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/braces/lib/compile.js",
+      "sha256": "dc98f22eee3d511785d92a00758d5f0d48efed5f5813bdecc2de430c529b5c9f",
+      "lineRanges": [
+        [
+          43,
+          58
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/@google-cloud/pubsub/build/src/telemetry-tracing.js",
+      "sha256": "06a3e6ad64144b7796c9459a3f5eb7b1339f641bdf6578525b300e3cbbb2e566",
+      "lineRanges": [
+        [
+          62,
+          72
+        ],
+        [
+          526,
+          540
+        ],
+        [
+          564,
+          582
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/gaxios/build/src/gaxios.js",
+      "sha256": "9a9988f38306d08faaa73aa0316ed0c6eed519ef8cfd3561273a45249eaf94b2",
+      "lineRanges": [
+        [
+          407,
+          429
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/xcode/lib/pbxProject.js",
+      "sha256": "c4e97f21f0c4aed9a818b3f011ee0ad577a7899db8af2be243d1d7c08ba403fc",
+      "lineRanges": [
+        [
+          86,
+          98
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/@capacitor/cli/dist/tasks/update.js",
+      "sha256": "6163a121e788bfa3350e28bc4a684c0eca795902ad473ee046eb0690c898a07f",
+      "lineRanges": [
+        [
+          1,
+          125
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/@capacitor/cli/dist/tasks/sync.js",
+      "sha256": "f762fd4035575cd70b5d7a0f7bd5c0a2d03a4a80e43b85904f44ccacfe3fd9ce",
+      "lineRanges": [
+        [
+          1,
+          120
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/vite/dist/node/chunks/node.js",
+      "sha256": "5d40302b2d86ff8f3501df6503a69908dce2c2eab4ce03c154cd8745c0bec5f2",
+      "lineRanges": [
+        [
+          10014,
+          10049
+        ],
+        [
+          10050,
+          10124
+        ],
+        [
+          11857,
+          11871
+        ],
+        [
+          11892,
+          11898
+        ],
+        [
+          12286,
+          12301
+        ],
+        [
+          16801,
+          16827
+        ],
+        [
+          24811,
+          24826
+        ],
+        [
+          34809,
+          34839
+        ]
+      ]
+    },
+    {
+      "file": "node_modules/firebase-tools/lib/emulator/controller.js",
+      "sha256": "86a3411bbb68a6e6c031e79f921b545045618471fd373e16cf6621f67011a946",
+      "lineRanges": [
+        [
+          476,
+          494
+        ]
+      ]
+    }
+  ],
+  "reachability": [
+    {
+      "advisoryId": "GHSA-vfj7-8cjw-p6xm",
+      "command": "npm run dev",
+      "assessment": "bundled vulnerable code present; current watcher disables glob expansion",
+      "evidence": {
+        "checkedAt": "2026-10-21T18:00:25.598Z",
+        "viteVersion": "8.3.5",
+        "mode": "development",
+        "probeOverrides": {
+          "middlewareMode": true,
+          "hmr": false
+        },
+        "networkListenerStarted": false,
+        "watcherDisableGlobbing": true,
+        "buildWatch": null
+      }
+    },
+    {
+      "advisoryId": "GHSA-vfj7-8cjw-p6xm",
+      "command": "npm run test:rules",
+      "assessment": "chokidar.watch is reachable; configured and resolved firestore.rules path has no brace input; rule contents and Firestore requests are not the glob argument"
+    },
+    {
+      "advisoryId": "GHSA-vfj7-8cjw-p6xm",
+      "command": "Web and Native builds",
+      "assessment": "one-shot Vite builds; build.watch is not enabled; tool code is not a client runtime dependency"
+    },
+    {
+      "advisoryId": "GHSA-8988-4f7v-96qf",
+      "command": "dev / Web build / Android build / Rules tests",
+      "assessment": "no affected W3CBaggagePropagator call found in reviewed paths; Pub/Sub uses W3CTraceContextPropagator; only Firestore emulator starts"
+    },
+    {
+      "advisoryId": "GHSA-w5hq-g745-h8pq",
+      "command": "dev / Web build / Android build / Rules tests",
+      "assessment": "reviewed gaxios and xcode call uuid.v4() with no output buffer; advisory affects v3/v5/v6 buffer paths; android sync does not execute the iOS update branch"
+    }
+  ],
+  "decision": {
+    "compatibleFixAvailable": false,
+    "dependencyChanges": [],
+    "overridesAdded": [],
+    "existingOverrideUnchanged": {
+      "@grpc/grpc-js": "1.14.6"
+    },
+    "reason": "Affected packages are already at the maximum stable versions satisfying current root and parent ranges; braces has no patched release; fixed alternative parents require major-range changes",
+    "rejectedActions": [
+      "npm audit fix --force",
+      "firebase-tools downgrade to 14.23.0",
+      "Capacitor CLI downgrade to 8.4.3 or family misalignment",
+      "forced transitive major overrides"
+    ],
+    "reconsiderWhen": [
+      "parent packages release compatible fixes",
+      "watcher/glob configuration changes",
+      "Baggage propagation or affected uuid APIs are introduced"
+    ]
+  },
+  "validation": {
+    "integrity": {
+      "checkedAt": "2026-10-21T18:04:47.968Z",
+      "baselineVerificationSha256": "0cb39de55394b77a62e66758889caac1cd8a9dc0340bda0cfa48c1607511b2ec",
+      "sourceHashesChecked": 57,
+      "sourceHashMismatches": [],
+      "artifacts": [
+        {
+          "path": "artifacts/v3/health-water-v3.0-dev.apk",
+          "bytes": 10638836,
+          "sha256": "750cdf6e4dcbe7d88a23185f8318cf873c8c1f4794832cec8fed89212196bc8a",
+          "actualSha256": "750cdf6e4dcbe7d88a23185f8318cf873c8c1f4794832cec8fed89212196bc8a",
+          "matched": true
+        },
+        {
+          "path": "artifacts/v3/health-water-v3.0-web.zip",
+          "bytes": 5224606,
+          "sha256": "369b09a9b63a9acd3b52e0008e00aada5bd7e1b382a938db5a4adad9954b6fc8",
+          "actualSha256": "369b09a9b63a9acd3b52e0008e00aada5bd7e1b382a938db5a4adad9954b6fc8",
+          "matched": true
+        },
+        {
+          "path": "artifacts/v3/health-water-v3.1-cloud-preview-web.zip",
+          "bytes": 5225272,
+          "sha256": "860dc60367e6cddabada380684a5fe626b39ef4e31b4c83b8711facdeb5b86bc",
+          "actualSha256": "860dc60367e6cddabada380684a5fe626b39ef4e31b4c83b8711facdeb5b86bc",
+          "matched": true
+        },
+        {
+          "path": "artifacts/v3/mobile-preview.png",
+          "bytes": 94006,
+          "sha256": "df7d5d01ac4ebea95a9e0d6d1743448f1404464b3068e53195af83680f3d7285",
+          "actualSha256": "df7d5d01ac4ebea95a9e0d6d1743448f1404464b3068e53195af83680f3d7285",
+          "matched": true
+        }
+      ],
+      "protectedFiles": [
+        {
+          "path": "docs/CODEX_FOR_OSS_APPLICATION.md",
+          "expected": "39106587f7db8a71c20a975b37646391c52436a71af8d2c260bdce01d9717ade",
+          "actualSha256": "39106587f7db8a71c20a975b37646391c52436a71af8d2c260bdce01d9717ade",
+          "matched": true
+        },
+        {
+          "path": "docs/oss-evidence/2026-10-21.json",
+          "expected": "84e79610ea9520a24cb3c3c88e6b5892c22f868a7003619be393b8923cb29e3d",
+          "actualSha256": "84e79610ea9520a24cb3c3c88e6b5892c22f868a7003619be393b8923cb29e3d",
+          "matched": true
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "npm audit --json --registry=https://registry.npmjs.org",
+        "phase": "before and after",
+        "exitCode": 1,
+        "result": "9 package alerts remain; not a clean audit"
+      },
+      {
+        "command": "npm audit --omit=dev --json --registry=https://registry.npmjs.org",
+        "exitCode": 0,
+        "result": "zero production advisories"
+      },
+      {
+        "command": "npm ls firebase-tools @capacitor/cli @google-cloud/pubsub @opentelemetry/core braces chokidar gaxios uuid xcode --all --json",
+        "exitCode": 0
+      },
+      {
+        "command": "Vite createServer with middlewareMode:true and hmr:false; inspect watcher.options; close",
+        "exitCode": 0,
+        "result": "disableGlobbing=true; no network listener started"
+      }
+    ],
+    "priorTestsReused": {
+      "unitAndReact": 23,
+      "firestoreEmulator": 6,
+      "browser": 8,
+      "nativeUnit": 3,
+      "total": 40
+    },
+    "repeatedFullTests": false,
+    "artifactsRebuilt": false,
+    "explanation": "No dependency, source, or build input changed. Existing source and artifact hashes match; earlier tests are retained, not reported as rerun."
+  },
+  "rawEvidence": [
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/advisories.json",
+      "sha256": "eb4ebcadd5ec168508435b781b6bb74f8c1132bfe07da0f929c49b1710a8c643"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/audit-after.json",
+      "sha256": "54a3993f63c590efa95afeec74d2be8a176c447696a0b4c6a19a57645d57ffbf"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/audit-after.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/audit-before.json",
+      "sha256": "54a3993f63c590efa95afeec74d2be8a176c447696a0b4c6a19a57645d57ffbf"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/audit-before.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/audit-inherited.json",
+      "sha256": "790403644f39bed05fca443acaef94f7801b3840771faf8253e581abeeb05e46"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/audit-production.json",
+      "sha256": "bdf676672c5ec115d9a4db96431c0d8dd4c22fdbefe1eafbb192b80282e15060"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/audit-production.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/call-sites.json",
+      "sha256": "e5a103e4090d4ad005e212f141bf28d223d1647607c0686238a5775172827e7c"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/dependency-edges.json",
+      "sha256": "232168a9d423b0d57d465cbfceac8c7f9e51b8df70f6e93a6dce8764b18c761d"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/git-status-before.txt",
+      "sha256": "39409669acac60a1b605ef3c10b28170ec593eb6df3bdb25f13a6273d50e92fe"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/installed-packages.json",
+      "sha256": "736da5606d2a6f22dc60865998c11e60fc50ad692dfc89471c4a7e8492c3b51e"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/integrity.json",
+      "sha256": "3b0a2357bc2f543b0dfe2e884564db0fa850e45eed2d66cdb60216b366479204"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/npm-ls.json",
+      "sha256": "1444b71820217b520315952193f66d293b685ff84a8fd98707ad032726db13db"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/npm-ls.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/npm-version.txt",
+      "sha256": "215dbc43fe317191465acb7b1af2f714487f306c72926be785f4740396c11c7b"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/registry.json",
+      "sha256": "3c277b4b3bc6acd5acaf9864dd9672936ced57735bc1680f2d605492bd00d6f7"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/verification-before.json",
+      "sha256": "0cb39de55394b77a62e66758889caac1cd8a9dc0340bda0cfa48c1607511b2ec"
+    },
+    {
+      "path": "artifacts/v3/dependency-audit-2026-10-22/vite-watch-probe.json",
+      "sha256": "13b0faac907e735634d88eb4b0ea45f5f62c5750525f4b73befda998b8309ba3"
+    }
+  ]
+}

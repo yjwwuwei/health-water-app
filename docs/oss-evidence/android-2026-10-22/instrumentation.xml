@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.yjwwuwei.healthwater.ReminderIntegrationTest" tests="3" failures="0" errors="0" skipped="0" time="0.91" timestamp="2026-10-22T04:00:08" hostname="localhost">
+  <properties>
+    <property name="device" value="water-v3-api36(AVD) - 16" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="persistedScheduleRestoresOnBootAndClockChanges" classname="com.yjwwuwei.healthwater.ReminderIntegrationTest" time="0.076" />
+  <testcase name="deliveredNotificationCanBeSnoozedAndWithdrawnAtGoal" classname="com.yjwwuwei.healthwater.ReminderIntegrationTest" time="0.123" />
+  <testcase name="goalMetPausesUntilTomorrowAndDisableCancels" classname="com.yjwwuwei.healthwater.ReminderIntegrationTest" time="0.029" />
+</testsuite>

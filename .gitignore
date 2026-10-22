@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 .env
+.env.*
+!.env.example
 dist
 dist-ssr
 *.local
@@ -30,4 +32,16 @@ android/.gradle
 android/build
 android/app/build
 android/capacitor-cordova-android-plugins/build
+.tools/
+artifacts/
+test-results/
+playwright-report/
+public/models/
+public/wasm/
+android/local.properties
+*.keystore
+*.jks
+.firebase/
+firebase-debug.log
+firestore-debug.log
 # *.apk  - APK保留，用于版本发布

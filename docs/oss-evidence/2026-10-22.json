@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "purpose": "Codex for OSS Pro application",
+  "maintenance_source": {
+    "document": "../V3_IMPLEMENTATION.md",
+    "verification": "../v3-verification.json",
+    "verification_recorded_at": "2026-10-22T01:50:51.3597293+08:00",
+    "branch": "codex/v3-rebuild",
+    "baseline": "998e170cbac7663e853fc2b13f223963df55c7c1",
+    "publication_state": "authorized_pending_push",
+    "android_acceptance": "../v3-android-acceptance.json"
+  },
+  "integrity_recheck": {
+    "source_matched": 57,
+    "source_total": 57,
+    "artifact_matched": 4,
+    "artifact_total": 4,
+    "source_mismatches": [],
+    "artifacts": [
+      {
+        "path": "artifacts/v3/health-water-v3.0-dev.apk",
+        "bytes": 10638836,
+        "sha256": "750cdf6e4dcbe7d88a23185f8318cf873c8c1f4794832cec8fed89212196bc8a",
+        "matched": true
+      },
+      {
+        "path": "artifacts/v3/health-water-v3.0-web.zip",
+        "bytes": 5224606,
+        "sha256": "369b09a9b63a9acd3b52e0008e00aada5bd7e1b382a938db5a4adad9954b6fc8",
+        "matched": true
+      },
+      {
+        "path": "artifacts/v3/health-water-v3.1-cloud-preview-web.zip",
+        "bytes": 5225272,
+        "sha256": "860dc60367e6cddabada380684a5fe626b39ef4e31b4c83b8711facdeb5b86bc",
+        "matched": true
+      },
+      {
+        "path": "artifacts/v3/mobile-preview.png",
+        "bytes": 94006,
+        "sha256": "df7d5d01ac4ebea95a9e0d6d1743448f1404464b3068e53195af83680f3d7285",
+        "matched": true
+      }
+    ],
+    "acceptance_matched": 46,
+    "acceptance_total": 46,
+    "acceptance_mismatches": []
+  },
+  "checks": [
+    {
+      "command": "npm ci --no-fund",
+      "log": "artifacts/v3/install.log",
+      "result": "passed"
+    },
+    {
+      "command": "npm run check",
+      "log": "artifacts/v3/check.log",
+      "tests": 23,
+      "result": "passed"
+    },
+    {
+      "command": "npm run test:rules",
+      "log": "artifacts/v3/rules.log",
+      "tests": 6,
+      "result": "passed"
+    },
+    {
+      "command": "npm run build && npm run test:e2e",
+      "log": "artifacts/v3/browser.log",
+      "tests": 8,
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:apk",
+      "log": "artifacts/v3/android-build.log",
+      "nativeUnitTests": 3,
+      "result": "passed"
+    },
+    {
+      "command": "node scripts/android-build.mjs :app:assembleDebugAndroidTest",
+      "log": "artifacts/v3/android-instrumentation-build.log",
+      "result": "compiled; subsequently executed in the native acceptance run"
+    },
+    {
+      "command": "npm run build:cloud",
+      "log": "artifacts/v3/cloud-preview-build.log",
+      "result": "passed"
+    },
+    {
+      "command": "ANDROID_SERIAL=emulator-5572 node scripts/android-build.mjs :app:connectedDebugAndroidTest",
+      "result": "passed",
+      "tests": 3,
+      "public_result": "android-2026-10-22/instrumentation.xml"
+    }
+  ],
+  "test_count": {
+    "unit_and_react": 23,
+    "firestore_emulator": 6,
+    "chromium": 8,
+    "android_unit": 3,
+    "total": 43,
+    "android_instrumentation_executed": true,
+    "android_instrumentation": 3,
+    "additional_installed_app_scenarios": 6,
+    "additional_emulator_reboot_checks": 1
+  },
+  "reuse_note": "Rechecked 57 source/build inputs, 4 artifacts and 46 native acceptance files. Reused unchanged prior tests and verified the 3 newly executed instrumented tests.",
+  "production_dependency_audit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "development_dependency_audit": {
+    "affected_package_count": 9,
+    "unique_advisories": 3,
+    "report": "../V3_DEPENDENCY_AUDIT.md"
+  },
+  "public_repository": {
+    "url": "https://github.com/yjwwuwei/health-water-app",
+    "head_sha": "998e170cbac7663e853fc2b13f223963df55c7c1",
+    "last_push_utc": "2026-06-02T08:31:20Z",
+    "stars": 0,
+    "forks": 0,
+    "license": null,
+    "latest_v3_changes_public": false,
+    "adoption_metrics": "unknown"
+  },
+  "publication_preparation": {
+    "authorization": "MIT license and publication of the verified v3 development branch explicitly approved by maintainer on 2026-10-22",
+    "scope": "v3 source, tests, build configuration, documentation, MIT license and selected emulator results",
+    "preliminary_scan": {
+      "candidate_files": 145,
+      "text_files_scanned": 108,
+      "suspicious_filenames": [],
+      "common_credential_pattern_hit_files": [],
+      "private_application_contact_hit_files": []
+    },
+    "caveat": "Pattern scan is not a security guarantee. Final staged-file check follows before push."
+  },
+  "application": {
+    "requested_support": "ChatGPT Pro with Codex",
+    "api_credits": false,
+    "codex_security": false,
+    "identity_fields": "Provided in conversation; intentionally omitted here.",
+    "status": "not_submitted",
+    "browser_blocker": "Rechecked: cua.getState returned empty apps and browsers; createBrowserTab('iab', ...) returned Browser is not available: iab.",
+    "field_counts": [
+      {
+        "key": "fit_zh",
+        "characters": 262
+      },
+      {
+        "key": "notes_zh",
+        "characters": 227
+      },
+      {
+        "key": "fit_en",
+        "characters": 491
+      },
+      {
+        "key": "notes_en",
+        "characters": 460
+      }
+    ]
+  },
+  "release_gates": [
+    "Old signing key and real in-place upgrade remain unverified",
+    "Physical Android notification and camera acceptance remains",
+    "Production Firebase Rules/indexes/auth deployment not performed"
+  ],
+  "license_decision": {
+    "license": "MIT",
+    "copyright": "2026 yjwwuwei",
+    "file": "../../LICENSE",
+    "scope": "project code; third-party components retain their own licenses"
+  }
+}
