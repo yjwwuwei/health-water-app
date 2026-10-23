@@ -1,0 +1,198 @@
+{
+  "recordedAt": "2026-10-22T01:50:51.3597293+08:00",
+  "baseline": "998e170cbac7663e853fc2b13f223963df55c7c1",
+  "branch": "codex/v3-rebuild",
+  "dependencyAudit": {
+    "production": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "development": {
+      "total": 9,
+      "moderate": 6,
+      "high": 3
+    },
+    "countingUnit": "npm package-level alerts, not independent vulnerabilities",
+    "uniqueAdvisories": 3,
+    "affectedInstalledPaths": 10,
+    "reviewedAt": "2026-10-21T18:04:47.968Z",
+    "report": "docs/V3_DEPENDENCY_AUDIT.md",
+    "evidence": "docs/v3-dependency-audit.json",
+    "evidenceSha256": "4a7ea07f5c5c3e4fccc1ef10fc728d91dd47e56f628cf2be3bdadc3108427d44",
+    "bundledCopyNote": "Vite 8.3.5 embeds braces 3.0.3 and patched chokidar 3.6.0; same braces advisory assessed separately",
+    "followUpValidation": {
+      "sourceHashesMatched": 57,
+      "artifactHashesMatched": 4,
+      "fullTestsRerun": false,
+      "artifactsRebuilt": false
+    }
+  },
+  "initialJavaScriptGzipBytes": 78247,
+  "checks": [
+    {
+      "command": "npm ci --no-fund",
+      "log": "artifacts/v3/install.log",
+      "result": "passed"
+    },
+    {
+      "command": "npm run check",
+      "log": "artifacts/v3/check.log",
+      "tests": 23,
+      "result": "passed"
+    },
+    {
+      "command": "npm run test:rules",
+      "log": "artifacts/v3/rules.log",
+      "tests": 6,
+      "result": "passed"
+    },
+    {
+      "command": "npm run build && npm run test:e2e",
+      "log": "artifacts/v3/browser.log",
+      "tests": 8,
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:apk",
+      "log": "artifacts/v3/android-build.log",
+      "nativeUnitTests": 3,
+      "result": "passed"
+    },
+    {
+      "command": "node scripts/android-build.mjs :app:assembleDebugAndroidTest",
+      "log": "artifacts/v3/android-instrumentation-build.log",
+      "result": "passed (initial compilation only; subsequent on-device execution recorded separately)"
+    },
+    {
+      "command": "npm run build:cloud",
+      "log": "artifacts/v3/cloud-preview-build.log",
+      "result": "passed"
+    },
+    {
+      "command": "ANDROID_SERIAL=emulator-5572 node scripts/android-build.mjs :app:connectedDebugAndroidTest",
+      "log": "artifacts/v3/native-acceptance-2026-10-22/instrumentation-gradle.log",
+      "tests": 3,
+      "result": "passed",
+      "recordedAt": "2026-10-22T04:19:10.761Z"
+    }
+  ],
+  "android": {
+    "emulatorNote": "API 36 / Android 16 emulator connected using existing ASCII toolchain path, prestarted ADB and port 5572. Three integration tests, six installed-WebView scenarios and a real reboot passed. Owned emulator stopped; no physical device used.",
+    "versionCode": 300,
+    "bundledServiceWorker": false,
+    "applicationId": "com.yjwwuwei.healthwater.dev",
+    "modelHashes": {
+      "model.json": "c65a3447162efa0c42af29498a4b151f4415b36ff3ae6fae2b28a32e840dcbfb",
+      "group1-shard1of2.bin": "b42c3232bf13b0efc691d3f0693dd3fc74404f709b1deee0a271828af6dbbea2",
+      "group1-shard2of2.bin": "8253ab965aa3122c08f331777ca395ce9ca19bb9e7cb278b99de1c46dbdeb6dc"
+    },
+    "instrumentedTestsExecuted": true,
+    "productionOrigin": "https://localhost",
+    "wasmHashes": {
+      "tfjs-backend-wasm.wasm": "70a5d516060464e5269f01c74bac1772d6b8ab6cb612acf16b5cdaf61f78d892",
+      "tfjs-backend-wasm-simd.wasm": "77ebb28a6d34f371dbbf2086b7f2de8994acd8ea5a3cf1fa24d2c26c840cac7b",
+      "tfjs-backend-wasm-threaded-simd.wasm": "c052228d4bef185c27bbe59a9e029570c78bbb9f08b3cb46b597851650373de2"
+    },
+    "versionName": "3.0.0",
+    "instrumentedTestsPassed": 3,
+    "nativeAcceptance": {
+      "report": "docs/V3_ANDROID_ACCEPTANCE.md",
+      "evidence": "docs/v3-android-acceptance.json",
+      "evidenceSha256": "49e81f84940f732789d99904568a622ca8c86472ed96fe366110b9b971aba91f",
+      "recordedAt": "2026-10-22T04:19:10.761Z"
+    }
+  },
+  "releaseGates": [
+    "Old signing key and real in-place upgrade remain unverified",
+    "Physical Android notification and camera acceptance remains",
+    "Production Firebase Rules/indexes/auth deployment not performed",
+    "Project license selection remains with maintainer"
+  ],
+  "cleanup": "Temporary toolchain junction retained after automatic approval blocked cleanup. No repository files deleted or moved by that command.",
+  "artifacts": [
+    {
+      "path": "artifacts/v3/health-water-v3.0-dev.apk",
+      "bytes": 10638836,
+      "sha256": "750cdf6e4dcbe7d88a23185f8318cf873c8c1f4794832cec8fed89212196bc8a"
+    },
+    {
+      "path": "artifacts/v3/health-water-v3.0-web.zip",
+      "bytes": 5224606,
+      "sha256": "369b09a9b63a9acd3b52e0008e00aada5bd7e1b382a938db5a4adad9954b6fc8"
+    },
+    {
+      "path": "artifacts/v3/health-water-v3.1-cloud-preview-web.zip",
+      "bytes": 5225272,
+      "sha256": "860dc60367e6cddabada380684a5fe626b39ef4e31b4c83b8711facdeb5b86bc"
+    },
+    {
+      "path": "artifacts/v3/mobile-preview.png",
+      "bytes": 94006,
+      "sha256": "df7d5d01ac4ebea95a9e0d6d1743448f1404464b3068e53195af83680f3d7285"
+    }
+  ],
+  "sourceHashes": {
+    "android/app/build.gradle": "d85d182b38f0e209c6ee53295d8cf3b75b97f4bcdcbf16bea157337d92ec2f8a",
+    "android/app/src/androidTest/java/com/yjwwuwei/healthwater/ReminderIntegrationTest.java": "5584b43bce30bf3690f04dd1bef4c7b7b6eb21b7eb6a4326029cc471d4288b27",
+    "android/app/src/main/AndroidManifest.xml": "278c7fa55880d0075948f51c029de164ccabbc5eb042b95aa4042ab8553824fe",
+    "android/app/src/main/java/com/yjwwuwei/healthwater/MainActivity.java": "1fec5a8e6118e5a42fc51c139e5717ebf1673352347341d444d4998abbca47a6",
+    "android/app/src/main/java/com/yjwwuwei/healthwater/ReminderReceiver.java": "54056813117b88bf89622283618c6bbb63ad8a5cda0a1b35fd0288756f688ac3",
+    "android/app/src/main/java/com/yjwwuwei/healthwater/ReminderSchedule.java": "978ab0e486889663b6f5663e95f924a40c187fb43ba5f3a8a35beb43f0faead6",
+    "android/app/src/main/java/com/yjwwuwei/healthwater/WaterFilesPlugin.java": "cc99b7cfacd2f9cd3939097e8c74bb953562eb8edab6aa3ec06105c4e1187349",
+    "android/app/src/main/java/com/yjwwuwei/healthwater/WaterRemindersPlugin.java": "0da2ddcf01c3eb198e3fc8bf1b6b1fbc31ede593ef938a413da935c897bc4de6",
+    "android/app/src/test/java/com/yjwwuwei/healthwater/ReminderScheduleTest.java": "82c1d3097e5620042111b56b4bb0f91870da9dbd65b151056f904e47c7a0950e",
+    "android/build.gradle": "70211ec7c5e158de52aaac59a2ed9ad00e966c05a4ba0f9c97aa72487ff6552c",
+    "android/gradle.properties": "218eb3409dc0e575f6025a29e42ac513fe06b0051c801521ecc5512805303607",
+    "capacitor.config.json": "4d6b931b87971e3c2bd286b5e963d391f00918116ef469a6743c78ad277b95cd",
+    "firestore.indexes.json": "f64657dd63186a66e298a0b54f65e938af3782af4c20d93fdc93014a7c872663",
+    "firestore.rules": "e55ab5914ce303dedbf15ee6df510a262c6d7660b9f87b9c89bdec3d775326c7",
+    "package-lock.json": "dda35e53d2b23f54f32509ec8fca79a7a2176122575432804dad5eabf25430f7",
+    "package.json": "0bbf351631e7b4d52bea169e3db9e16a51d8dfc48fce1fe3e79553ba10767df3",
+    "scripts/android-build.mjs": "65c44de599718d3c6019d1daf200a1692e8a9cbc30db0f75792322b5d25326a3",
+    "scripts/java-env.mjs": "11fb1b837c6313705bd0344b55d551a553ed2ec22e984f96d8242f9fc6d6cf43",
+    "scripts/pose-assets.lock.json": "c6201f23002871bf30412768a2ba908a7df59e150cf7f55ee2957ff550964999",
+    "scripts/prepare-pose.mjs": "1dbbeb5caf467319d8e9b6a138aca655c113ff52a6178ee95c159250b331e84f",
+    "scripts/sw-template.js": "18a95e8ebb2cbc36c96bfe6a29f895cb7f71f371cfcb470045c292d25fbfa65b",
+    "scripts/test-rules.mjs": "6bbe803eab6fd60ea03f5f72aac3df1e558f03cf85ed582de89db24215cade91",
+    "scripts/verify-release.mjs": "5c8d068bbba42d8a8de9eb99820dc56bfa32a4f5a6f6b424543dd6239206544e",
+    "src/App.tsx": "4beba8941842b3ac3cb025ac58f58ac13435d0f46642865feb935881e9d1a342",
+    "src/cloud/firebase.ts": "78b2b8c99aeab228698b6744a381b2b5d52eac7423d68aee93fb04d8834dc20b",
+    "src/cloud/sync.ts": "c20258307a08e4e5808b6609f11ba4b67318fa6d63aa5119dc8895d64ccaa886",
+    "src/core/dates.ts": "212e633260454a0d857fee216cbdb74f21921a59d9240427dc08b4dc9de1cfe8",
+    "src/core/types.ts": "af977c05dca4d40790891d4bf82c87b326cb275a0abd80e95ce5f6d279af592c",
+    "src/core/validation.ts": "9c77bba1d9c84b3d40b5a5145b8e1fcce7631769305aab59e80a89b8622b1cae",
+    "src/data/database.ts": "e124eb397d53e90d790ea66dc9f2db6ed9d776ce60045a41fdaec8e29debfa2b",
+    "src/data/migration.ts": "b89c66eb8edcb039db393a05ef328b5aedaeadcdf9fcfd31f8dd81716c12d109",
+    "src/data/repository.ts": "b08782822c075bdc12b0dbd4641127b07ab4f4de60b3fa5c8ff58abf2bd762a6",
+    "src/env.d.ts": "2c6c4af2fd9e1ebbfbd6fb4b0047f398066c72d18e607aa23781815c77d38030",
+    "src/main.tsx": "5b95b0ae21f2b7ad77e90b545946197e47a8677bb89fb937b177810c1c6d6ebd",
+    "src/mediapipe-pose-shim.js": "6cff853dd6e1d4bfe1320c8bfe8b0c7031fc31d018857452a291cb88884a7613",
+    "src/platform/files.ts": "6a95296096970d870d3e2bbbb6f109273dcf0b261e52593a037a1b62dc8550dd",
+    "src/platform/offline.ts": "3bc483aac8a206e737e836f4a2b50f4a3e261f18aec2eb5ce47ed2ee1f85d055",
+    "src/platform/reminders.ts": "a27e603661c16dc3db3bf2fce6750efd3f477a566a750a802ca4579ffcfc8680",
+    "src/pose/detector.ts": "49f5787f44b03047742f9f3bc47836ecf8bdbf15885cdfe2b9e0ff5f0afff841",
+    "src/pose/gesture.ts": "09228963b45ee275c3de29b5f026c634d082f49b30a340317fa026f74d78e1b4",
+    "src/styles.css": "26ef383bf8cc11120692c863bf871366700b6417515b6a00d36e07b4541fc03c",
+    "src/ui/CloudPanel.tsx": "8cda8540df0050736212c20c9e891760a8779f203e34c38d6afcd2ef6ed9e2d4",
+    "src/ui/Leaderboard.tsx": "f7667d0a1db9af95562370b13548ced097a3f3c5b7d0c777012b8b6615b1ae87",
+    "src/ui/Modal.tsx": "17b7fadbb96fab0b5626b672729914a9b7edcb5c8f6c41613fce4ff4bf116b5a",
+    "src/ui/PoseCheckin.tsx": "3b1cc5bfc3697a2ede4a07073fe5ae2e473e20d20dd811ec87ba9934eb42e723",
+    "src/ui/useSync.ts": "9aa3afe6d60da4c25b654779971b5a345d090e2de3ccd27bd5c7100e69b22798",
+    "tests/e2e/app.spec.ts": "89aca55273e5978a4f1de424c7bcd8e0faa5165afcf09c1d8b05753e7faffec6",
+    "tests/e2e/sw-update.spec.ts": "27f794a5861cca98b73b631b4471b60b5e0b8b9774e3de7a9b501ec2632940eb",
+    "tests/rules/firestore.test.ts": "3d9cad82eb725c26337570a409eb6550ace2de11ff3be4f182846cf8bca54dc9",
+    "tests/setup.ts": "aea971be8f84f4fdba27b9da8a0fdf3b6f13153c789dd28d8e65645bd202599e",
+    "tests/unit/app.test.tsx": "79a3a4ccef5f49f212148606265c65ad96a09fc1d0043284c8c16ea615f70014",
+    "tests/unit/dates.test.ts": "6abae3d58be61201aeffb36c066daa20dabe7794dccf41603334b58667bb9abf",
+    "tests/unit/gesture.test.ts": "1c2112b4c37835e5a5316471653428d30cffe75925d68c74f677be29e2b2d23e",
+    "tests/unit/offline.test.ts": "acb08084debd824e5bc89f4726b1b643c63f14e596a4790518cba976a17ab121",
+    "tests/unit/repository.test.ts": "0b11bc1bac7496f9aecf0143b60ed5a26e8634ec2e9027b50f778c6f2fd3ab39",
+    "tests/unit/sync.test.ts": "9eace6219db91a204037314ce9fc6c5b3a6c03d3d7a7d049d389c42068f32afc",
+    "vite.config.ts": "685d05732fa8b701ccdcf6813207094e5c024c19460d0b5a3877c1628ac714c2"
+  },
+  "lastValidatedAt": "2026-10-22T04:19:10.761Z"
+}

@@ -1,21 +1,28 @@
 import js from '@eslint/js'
 import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
-
-export default defineConfig([
-  globalIgnores(['dist']),
+import tseslint from 'typescript-eslint'
+import hooks from 'eslint-plugin-react-hooks'
+export default tseslint.config(
   {
-    files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'android/**',
+      'test-results/**',
+      'playwright-report/**',
+      '.tools/**',
+      'public/models/**',
     ],
-    languageOptions: {
-      globals: globals.browser,
-      parserOptions: { ecmaFeatures: { jsx: true } },
-    },
   },
-])
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ['**/*.{js,mjs,ts,tsx}'],
+    languageOptions: { globals: { ...globals.browser, ...globals.node, ...globals.serviceworker } },
+  },
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    plugins: { 'react-hooks': hooks },
+    rules: { ...hooks.configs.recommended.rules },
+  },
+)

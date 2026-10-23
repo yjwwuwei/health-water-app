@@ -1,0 +1,54 @@
+{
+  "startedAt": "2026-10-22T04:09:15.004Z",
+  "serial": "emulator-5572",
+  "scenarios": [
+    {
+      "name": "native record, undo and process-restart persistence",
+      "result": "passed",
+      "details": {
+        "beforeMl": 200,
+        "afterMl": 300,
+        "origin": "https://localhost/"
+      }
+    },
+    {
+      "name": "Android back hides the keyboard, then dismisses the dialog without leaving the app",
+      "result": "passed"
+    },
+    {
+      "name": "native JSON document picker opens and cancellation preserves records",
+      "result": "passed"
+    },
+    {
+      "name": "reminder UI toggles native scheduling after asynchronous persistence",
+      "result": "passed",
+      "details": {
+        "permission": "granted",
+        "enabled": true,
+        "nextAt": 1792659600000
+      }
+    },
+    {
+      "name": "system document provider writes a valid native JSON backup",
+      "result": "passed",
+      "details": {
+        "filename": "健康喝水-2026-10-22.json",
+        "format": "health-water",
+        "version": 3,
+        "entityCount": 7
+      }
+    },
+    {
+      "name": "bundled pose model infers in Android WebView and releases its emulated camera",
+      "result": "passed",
+      "details": {
+        "width": 480,
+        "height": 640,
+        "camera": "emulated; no physical phone",
+        "entryAdded": false
+      }
+    }
+  ],
+  "completedAt": "2026-10-22T04:09:22.724Z",
+  "reminderLeftEnabledForRebootCheck": true
+}

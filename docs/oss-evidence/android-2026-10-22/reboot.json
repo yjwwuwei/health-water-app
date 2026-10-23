@@ -1,0 +1,11 @@
+{
+  "startedAt": "2026-10-22T04:14:21.348Z",
+  "serial": "emulator-5572",
+  "package": "com.yjwwuwei.healthwater.dev",
+  "bootIdBefore": "12c9b985-109a-463e-8e89-3a4638b65011",
+  "bootIdAfter": "3a32d252-31a4-42c8-9cc2-7e3efb3aa3f0",
+  "result": "passed",
+  "alarmRestoredBeforeAppLaunch": true,
+  "receiverStartedBySystemBroadcast": true,
+  "completedAt": "2026-10-22T04:15:01.601Z"
+}

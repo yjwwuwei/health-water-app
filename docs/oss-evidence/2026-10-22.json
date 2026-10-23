@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "purpose": "Codex for OSS Pro application",
+  "maintenance_source": {
+    "document": "../V3_IMPLEMENTATION.md",
+    "verification": "../v3-verification.json",
+    "verification_recorded_at": "2026-10-22T01:50:51.3597293+08:00",
+    "branch": "codex/v3-rebuild",
+    "baseline": "998e170cbac7663e853fc2b13f223963df55c7c1",
+    "publication_state": "public_development_branch",
+    "android_acceptance": "../v3-android-acceptance.json",
+    "first_public_commit": "d22319e105bc801231da5607ecc69bbd48c365e5",
+    "verified_code_commit": "579c66d898f5706d6355881d8223c82b63bb1f03"
+  },
+  "integrity_recheck": {
+    "source_matched": 57,
+    "source_total": 57,
+    "artifact_matched": 4,
+    "artifact_total": 4,
+    "source_mismatches": [],
+    "artifacts": [
+      {
+        "path": "artifacts/v3/health-water-v3.0-dev.apk",
+        "bytes": 10638836,
+        "sha256": "750cdf6e4dcbe7d88a23185f8318cf873c8c1f4794832cec8fed89212196bc8a",
+        "matched": true
+      },
+      {
+        "path": "artifacts/v3/health-water-v3.0-web.zip",
+        "bytes": 5224606,
+        "sha256": "369b09a9b63a9acd3b52e0008e00aada5bd7e1b382a938db5a4adad9954b6fc8",
+        "matched": true
+      },
+      {
+        "path": "artifacts/v3/health-water-v3.1-cloud-preview-web.zip",
+        "bytes": 5225272,
+        "sha256": "860dc60367e6cddabada380684a5fe626b39ef4e31b4c83b8711facdeb5b86bc",
+        "matched": true
+      },
+      {
+        "path": "artifacts/v3/mobile-preview.png",
+        "bytes": 94006,
+        "sha256": "df7d5d01ac4ebea95a9e0d6d1743448f1404464b3068e53195af83680f3d7285",
+        "matched": true
+      }
+    ],
+    "acceptance_matched": 46,
+    "acceptance_total": 46,
+    "acceptance_mismatches": []
+  },
+  "checks": [
+    {
+      "command": "npm ci --no-fund",
+      "log": "artifacts/v3/install.log",
+      "result": "passed"
+    },
+    {
+      "command": "npm run check",
+      "log": "artifacts/v3/check.log",
+      "tests": 23,
+      "result": "passed"
+    },
+    {
+      "command": "npm run test:rules",
+      "log": "artifacts/v3/rules.log",
+      "tests": 6,
+      "result": "passed"
+    },
+    {
+      "command": "npm run build && npm run test:e2e",
+      "log": "artifacts/v3/browser.log",
+      "tests": 8,
+      "result": "passed"
+    },
+    {
+      "command": "npm run build:apk",
+      "log": "artifacts/v3/android-build.log",
+      "nativeUnitTests": 3,
+      "result": "passed"
+    },
+    {
+      "command": "node scripts/android-build.mjs :app:assembleDebugAndroidTest",
+      "log": "artifacts/v3/android-instrumentation-build.log",
+      "result": "compiled; subsequently executed in the native acceptance run"
+    },
+    {
+      "command": "npm run build:cloud",
+      "log": "artifacts/v3/cloud-preview-build.log",
+      "result": "passed"
+    },
+    {
+      "command": "ANDROID_SERIAL=emulator-5572 node scripts/android-build.mjs :app:connectedDebugAndroidTest",
+      "result": "passed",
+      "tests": 3,
+      "public_result": "android-2026-10-22/instrumentation.xml"
+    }
+  ],
+  "test_count": {
+    "unit_and_react": 23,
+    "firestore_emulator": 6,
+    "chromium": 8,
+    "android_unit": 3,
+    "total": 43,
+    "android_instrumentation_executed": true,
+    "android_instrumentation": 3,
+    "additional_installed_app_scenarios": 6,
+    "additional_emulator_reboot_checks": 1
+  },
+  "reuse_note": "Rechecked 57 source/build inputs, 4 artifacts and 46 native acceptance files. Reused unchanged prior tests and verified the 3 newly executed instrumented tests.",
+  "production_dependency_audit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "development_dependency_audit": {
+    "affected_package_count": 9,
+    "unique_advisories": 3,
+    "report": "../V3_DEPENDENCY_AUDIT.md"
+  },
+  "public_repository": {
+    "url": "https://github.com/yjwwuwei/health-water-app",
+    "last_push_utc": "2026-10-22T04:28:57Z",
+    "stars": 0,
+    "forks": 0,
+    "latest_v3_changes_public": true,
+    "adoption_metrics": "unknown",
+    "default_branch": "main",
+    "default_branch_sha": "998e170cbac7663e853fc2b13f223963df55c7c1",
+    "default_branch_license_detected": null,
+    "development_branch_license": "MIT",
+    "development_branch_url": "https://github.com/yjwwuwei/health-water-app/tree/codex/v3-rebuild"
+  },
+  "publication_preparation": {
+    "authorization": "MIT license and publication of the verified v3 development branch explicitly approved by maintainer on 2026-10-22",
+    "scope": "v3 source, tests, build configuration, documentation, MIT license and selected emulator results",
+    "preliminary_scan": {
+      "candidate_files": 145,
+      "text_files_scanned": 108,
+      "suspicious_filenames": [],
+      "common_credential_pattern_hit_files": [],
+      "private_application_contact_hit_files": []
+    },
+    "caveat": "Pattern scan is not a security guarantee. Private application identity is omitted from public files.",
+    "staged_scan": {
+      "text_files_scanned": 88,
+      "common_credential_pattern_hit_files": [],
+      "private_application_contact_hit_files": [],
+      "suspicious_filenames": [],
+      "note": "Scan covered new/modified staged files; the standard third-party Apache license text was then added."
+    }
+  },
+  "application": {
+    "requested_support": "ChatGPT Pro with Codex",
+    "api_credits": false,
+    "codex_security": false,
+    "identity_fields": "Provided in conversation; intentionally omitted here.",
+    "status": "not_submitted",
+    "browser_blocker": "Rechecked: cua.getState returned empty apps and browsers; createBrowserTab('iab', ...) returned Browser is not available: iab.",
+    "field_counts": [
+      {
+        "key": "fit_zh",
+        "characters": 262
+      },
+      {
+        "key": "notes_zh",
+        "characters": 233
+      },
+      {
+        "key": "fit_en",
+        "characters": 491
+      },
+      {
+        "key": "notes_en",
+        "characters": 441
+      },
+      {
+        "key": "api_usage_en",
+        "characters": 178
+      }
+    ],
+    "preparation_status": "ready_with_public_development_branch_and_passing_ci",
+    "form_validation_update": {
+      "date": "2026-10-22",
+      "evidence": "User-provided form screenshot and current official application page",
+      "optional_api_credit_checkbox_checked": false,
+      "required_fields_reported": [
+        "OpenAI organization ID",
+        "API credit usage"
+      ],
+      "correction": "Earlier guidance to leave these fields blank was inaccurate. Use the applicant's real organization ID and a truthful Pro-only explanation.",
+      "organization_settings_url": "https://platform.openai.com/settings/organization/general",
+      "manual_entry_started": true,
+      "submission_success_confirmed": false
+    },
+    "api_usage_text": "Not applicable. I am applying for ChatGPT Pro with Codex only, not API credits. I plan to use Codex for regression tests, code review and release maintenance of health-water-app."
+  },
+  "release_gates": [
+    "Old signing key and real in-place upgrade remain unverified",
+    "Physical Android notification and camera acceptance remains",
+    "Production Firebase Rules/indexes/auth deployment not performed"
+  ],
+  "license_decision": {
+    "license": "MIT",
+    "copyright": "2026 yjwwuwei",
+    "file": "../../LICENSE",
+    "scope": "project code; third-party components retain their own licenses"
+  },
+  "remote_ci": {
+    "run_id": 39722614560,
+    "url": "https://github.com/yjwwuwei/health-water-app/actions/runs/39722614560",
+    "head_sha": "579c66d898f5706d6355881d8223c82b63bb1f03",
+    "status": "completed",
+    "web_and_rules": "success",
+    "android": "success",
+    "scope": "37 Web/Rules/browser tests, production dependency audit and builds; Android unit tests/build and instrumentation compilation. The three instrumented tests were executed locally, not by this CI.",
+    "initial_failure": {
+      "run_id": 39722509679,
+      "cause": "setup-android default requested obsolete SDK package tools",
+      "fix_commit": "579c66d898f5706d6355881d8223c82b63bb1f03"
+    },
+    "conclusion": "success",
+    "completed_record_updated_at": "2026-10-22T04:31:38Z",
+    "jobs": [
+      {
+        "id": 119639366711,
+        "name": "android",
+        "conclusion": "success"
+      },
+      {
+        "id": 119639367012,
+        "name": "web-and-rules",
+        "conclusion": "success"
+      }
+    ],
+    "artifact": {
+      "id": 12401887530,
+      "name": "android-dev-apk",
+      "size_in_bytes": 9991539,
+      "digest": "sha256:095f7f8dfc0226591b31e034717876ca7c6757c5bde372c30c7324720b1891ad",
+      "url": "https://github.com/yjwwuwei/health-water-app/actions/runs/39722614560/artifacts/12401887530"
+    },
+    "final_documentation_only_note": "Subsequent documentation-only commit records this completed run; it does not change source, dependency, build or workflow inputs."
+  }
+}

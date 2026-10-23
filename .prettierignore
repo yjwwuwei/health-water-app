@@ -1,0 +1,10 @@
+node_modules/
+dist/
+android/
+public/models/
+public/wasm/
+.tools/
+docs/oss-evidence/
+test-results/
+playwright-report/
+package-lock.json

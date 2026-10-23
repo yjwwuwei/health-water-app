@@ -1,0 +1,356 @@
+{
+  "recordedAt": "2026-10-22T04:19:10.761Z",
+  "baseline": "998e170cbac7663e853fc2b13f223963df55c7c1",
+  "branch": "codex/v3-rebuild",
+  "environment": {
+    "completedAt": "2026-10-22T04:15:31.567Z",
+    "serial": "emulator-5572",
+    "package": "com.yjwwuwei.healthwater.dev",
+    "androidVersion": "16",
+    "apiLevel": 36,
+    "model": "sdk_gphone64_x86_64",
+    "webview": "Current WebView package (name, version): (com.google.android.webview, 133.0.6943.137)",
+    "origin": "https://localhost/",
+    "totalAfterRebootMl": 300,
+    "reminderDisabled": true,
+    "activeReminderAlarmRemoved": true,
+    "poseDisabled": true,
+    "result": "passed"
+  },
+  "scope": "Local development APK on a task-owned emulator; no physical device, production deployment or signing change",
+  "sourceComparison": {
+    "compared": 57,
+    "unchanged": 56,
+    "changed": [
+      {
+        "path": "android/app/src/androidTest/java/com/yjwwuwei/healthwater/ReminderIntegrationTest.java",
+        "beforeSha256": "fcee32597e171ec06e7da82a48b81027ba1bca607f916544222a07313b0c46d3",
+        "sha256": "5584b43bce30bf3690f04dd1bef4c7b7b6eb21b7eb6a4326029cc471d4288b27"
+      }
+    ]
+  },
+  "existingArtifacts": [
+    {
+      "path": "artifacts/v3/health-water-v3.0-dev.apk",
+      "bytes": 10638836,
+      "sha256": "750cdf6e4dcbe7d88a23185f8318cf873c8c1f4794832cec8fed89212196bc8a"
+    },
+    {
+      "path": "artifacts/v3/health-water-v3.0-web.zip",
+      "bytes": 5224606,
+      "sha256": "369b09a9b63a9acd3b52e0008e00aada5bd7e1b382a938db5a4adad9954b6fc8"
+    },
+    {
+      "path": "artifacts/v3/health-water-v3.1-cloud-preview-web.zip",
+      "bytes": 5225272,
+      "sha256": "860dc60367e6cddabada380684a5fe626b39ef4e31b4c83b8711facdeb5b86bc"
+    },
+    {
+      "path": "artifacts/v3/mobile-preview.png",
+      "bytes": 94006,
+      "sha256": "df7d5d01ac4ebea95a9e0d6d1743448f1404464b3068e53195af83680f3d7285"
+    }
+  ],
+  "existingArtifactsMatched": 4,
+  "applicationApkChanged": false,
+  "dependencyManifestsChanged": false,
+  "unrelatedDocuments": [
+    {
+      "path": "docs/CODEX_FOR_OSS_APPLICATION.md",
+      "earlierAuditSha256": "39106587f7db8a71c20a975b37646391c52436a71af8d2c260bdce01d9717ade",
+      "observedSha256": "dffd712f98a9d9cb3393bde926a6b40b4f5e46a1b5804bbd7b7b0694234a7b90",
+      "matchesEarlierAudit": false,
+      "lastModifiedAt": "2026-10-22T03:56:43.064Z",
+      "modifiedByThisAcceptanceTask": false
+    },
+    {
+      "path": "docs/oss-evidence/2026-10-21.json",
+      "earlierAuditSha256": "84e79610ea9520a24cb3c3c88e6b5892c22f868a7003619be393b8923cb29e3d",
+      "observedSha256": "84e79610ea9520a24cb3c3c88e6b5892c22f868a7003619be393b8923cb29e3d",
+      "matchesEarlierAudit": true,
+      "lastModifiedAt": "2026-10-21T15:27:12.083Z",
+      "modifiedByThisAcceptanceTask": false
+    }
+  ],
+  "checks": {
+    "instrumentedTests": {
+      "command": "ANDROID_SERIAL=emulator-5572 node scripts/android-build.mjs :app:connectedDebugAndroidTest",
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "result": "passed"
+    },
+    "installedWebView": {
+      "passed": 6,
+      "result": "passed",
+      "results": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke.json",
+      "note": "Successful staged runs consolidated; earlier harness failures retained separately"
+    },
+    "realReboot": {
+      "startedAt": "2026-10-22T04:14:21.348Z",
+      "serial": "emulator-5572",
+      "package": "com.yjwwuwei.healthwater.dev",
+      "bootIdBefore": "12c9b985-109a-463e-8e89-3a4638b65011",
+      "bootIdAfter": "3a32d252-31a4-42c8-9cc2-7e3efb3aa3f0",
+      "result": "passed",
+      "alarmRestoredBeforeAppLaunch": true,
+      "receiverStartedBySystemBroadcast": true,
+      "completedAt": "2026-10-22T04:15:01.601Z"
+    },
+    "previousAutomatedTests": {
+      "passed": 40,
+      "rerun": false,
+      "note": "Inputs to prior unit/React, Rules, browser and Java unit tests unchanged; previous results retained"
+    },
+    "totalAutomatedTestsPassed": 43,
+    "separateManualHarnessScenarios": 7
+  },
+  "cleanup": {
+    "recordedAt": "2026-10-22T12:15:56.1723148+08:00",
+    "serial": "emulator-5572",
+    "result": "passed",
+    "remainingOwnedEmulatorProcesses": 0,
+    "adbDevices": [
+      "List of devices attached",
+      ""
+    ]
+  },
+  "remainingGates": [
+    "Old signing key and real in-place upgrade remain unverified",
+    "Physical Android notification and camera acceptance remains",
+    "Production Firebase Rules/indexes/auth deployment not performed",
+    "Project license selection remains with maintainer"
+  ],
+  "evidence": [
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/alarms-after-reboot-full.log",
+      "bytes": 43111,
+      "sha256": "3397f01e22fa834344ae9d165b4c8f8d11b01816fb354ce32a88d1f32e2df2c9"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/alarms-after-reboot.log",
+      "bytes": 3010,
+      "sha256": "c9f23650f4374f0f8e6e4ea3e1efde7f86d880c400dc9b28f2e4bd854f8b3590"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/alarms-before-reboot.log",
+      "bytes": 4516,
+      "sha256": "6c0ab9c5309c6e11c8d1a258c5136904b5144813648ded9e90d68b1ebefeec57"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-document-picker.png",
+      "bytes": 248384,
+      "sha256": "a91f2014a535e345e8880341962426793185c48cb1f3fde85619eea9167fdfaf"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-first-launch.png",
+      "bytes": 323761,
+      "sha256": "b1fd1845845f458681f224c61ded2e15dbc506879875309ba3df0d8dc564d79d"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-pose.png",
+      "bytes": 146769,
+      "sha256": "62374d8b7c1db7802775578019a65624f99dda5d6a2cfe0c02d414c5eee5af65"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-reboot.mjs",
+      "bytes": 3643,
+      "sha256": "2fafca8cb2ec1b1d6b3bc3099dd1b007e4a63ab31c7917ae6c4efd16863313c3"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-recorded.png",
+      "bytes": 265772,
+      "sha256": "ace725eb5d74bb90b0f36756ab57080a91c8deb71f314071641a4048efcde75c"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-remaining-failure.png",
+      "bytes": 313669,
+      "sha256": "538823b76da1885fde492b5f49cb4ea071735af41213ecf4c6621dfaea228d7b"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-smoke-cleanup.mjs",
+      "bytes": 2501,
+      "sha256": "78cb2e720c9fa39f15ddbfe2f367d3fc43f842d2011ccc79f43f1aced79e8868"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-smoke-failure.png",
+      "bytes": 242199,
+      "sha256": "44ad5bd0f3c94a33f9c46dddef414b03b78196d4a955993e669337c6258138bb"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-smoke-remaining.mjs",
+      "bytes": 6745,
+      "sha256": "2aa2b3ad47a6052e79806e1d4e9bdf9cb4e86d6346e3134a85cd01ca647914bf"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/android-smoke.mjs",
+      "bytes": 6469,
+      "sha256": "369e9091945e54017d278cf4728cdace2102a764388e8caefdc227c2751a2789"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/device-final-state.json",
+      "bytes": 477,
+      "sha256": "1d000786aada711967b084bfcf9bd89aa3bd98fe9e1dd815c2521a14486b62f0"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/document-picker.xml",
+      "bytes": 17166,
+      "sha256": "ce41b9e437ba20bb2dae5ff653ee7a320e9d23b1f4bf2a71d7e6b0feac431363"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/emulator-stop.log",
+      "bytes": 39,
+      "sha256": "483d31d727a891b284fe65f3b042180f0dcf884ee845c457e261de7a6e891804"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/emulator-stopped.json",
+      "bytes": 219,
+      "sha256": "0588ff4b8f63c99bcfa3e6c45f6c803813df9b5f5d9d41fe94f1aed9ea3fcb92"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/health-water-v3.0-androidTest.apk",
+      "bytes": 570126,
+      "sha256": "808e858fb6b5c0c2c506c98b329d184dd79de536dc8edb2e10f7bb8b460fdeb2"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/install-app.log",
+      "bytes": 38,
+      "sha256": "c4aa470acafcf8576c15b0f0b5ae7e852d1ec5413372d0e6a9272e788e1306d3"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/install-tests.log",
+      "bytes": 38,
+      "sha256": "c4aa470acafcf8576c15b0f0b5ae7e852d1ec5413372d0e6a9272e788e1306d3"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/instrumentation-gradle.log",
+      "bytes": 8812,
+      "sha256": "7012e3cda32de6c962bde42cf7417d8fb3bd446e4c9d4dd6b3460a73c5394e62"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/instrumentation-initial.log",
+      "bytes": 1501,
+      "sha256": "d6fb9a1eb86eb5caac39f82c0b1c200db595cb1d488f592d8cbc34705be26267"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/instrumentation.xml",
+      "bytes": 852,
+      "sha256": "48e50b58a63ddc0ee1fb349de293c1a938be071bf520dc766136caf6b368d7b9"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/native-export.json",
+      "bytes": 2314,
+      "sha256": "ee7ac3c15570a36ba25ded814f62f5c634a8a81137557460965d3582969d03c6"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reboot-logcat.log",
+      "bytes": 4863266,
+      "sha256": "fd08112f1ad4acfc14bfa4b6c0702af41823e11edd135405cf3c41c65f75e14b"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reboot-verified-activities.log",
+      "bytes": 25570,
+      "sha256": "fdbad4ff2f47740d9efa27c6483fceea7fd08dadd98ba20eb476b17ba2a31290"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reboot-verified-after-alarms.log",
+      "bytes": 38912,
+      "sha256": "b1271fd99e3615f3825198af3a89e0b84e01f569c76c65e963a73ab638e39b75"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reboot-verified-after-prefs.xml",
+      "bytes": 357,
+      "sha256": "6f4a23a274526b305c961eb3862e182bb6a5208946119c735952b2a800adbbe9"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reboot-verified-before-alarms.log",
+      "bytes": 43049,
+      "sha256": "4d07f3a920c9502bda8ee841b66633c82d4766c26eb675167a3cd58c30bf0527"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reboot-verified-before-prefs.xml",
+      "bytes": 357,
+      "sha256": "6f4a23a274526b305c961eb3862e182bb6a5208946119c735952b2a800adbbe9"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reboot-verified-receiver.log",
+      "bytes": 213,
+      "sha256": "843b6d95c4d995e55d5c63fa9621b27a1957ac9e8294780d4b4c9029ac6290d2"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reboot.json",
+      "bytes": 386,
+      "sha256": "c1d8ed275561b560649e356e520b24917791a9a2598a70fa6fda8aae4bbe3bf7"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reminders-after-reboot.xml",
+      "bytes": 367,
+      "sha256": "0b9a1382d35eed2fe22bff76da01f63b2bd54710ce1df64d03708bba4736d72e"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/reminders-before-reboot.xml",
+      "bytes": 367,
+      "sha256": "0b9a1382d35eed2fe22bff76da01f63b2bd54710ce1df64d03708bba4736d72e"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/verification-before.json",
+      "bytes": 10244,
+      "sha256": "6845ad6683ac3aea806fc852e400bc09863f1f735869d569014be2745c5a4262"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-first-attempt.json",
+      "bytes": 776,
+      "sha256": "0142e4ab1b2003876a806407e257733fa28492b99fc045098e1f87ab964d67a7"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-first-attempt.log",
+      "bytes": 2074,
+      "sha256": "36bd0511397a34f7c3649efe631c1cdf9991858facd70bbeedb4ac5993818c51"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-fourth-attempt.json",
+      "bytes": 1026,
+      "sha256": "43af1c0b8ce7e94c353c0ac8f041212af1f10f97148ba84edbc14ec26303a8cf"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-fourth-attempt.log",
+      "bytes": 792,
+      "sha256": "7688b5cc55befecd41c84593b5e9bf0f3795d3adb0615c15a49222e0763429c0"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-remaining.log",
+      "bytes": 151,
+      "sha256": "504c2bebdc6d3822e8bde651fb93d4f9ccb7064aef2ef8b98cad0597b95da598"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-second-attempt.json",
+      "bytes": 767,
+      "sha256": "b94bdfb174e703c936c3354fff163a780555943e6e6275e0f272e9cd2aee2f12"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-second-attempt.log",
+      "bytes": 1475,
+      "sha256": "5937ae2ae55a66279ac735ce9116e1c32b18225be0744a9eb7c0d9370b7f363d"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-third-attempt.json",
+      "bytes": 1490,
+      "sha256": "f90a5d338071bfe68b1a83529d932563979921d63af78170052649e045385e4b"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke-third-attempt.log",
+      "bytes": 1803,
+      "sha256": "556d5a8016bed01180859673f067a4dea895b47d3d76f0779ffc8015a142035e"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke.json",
+      "bytes": 1471,
+      "sha256": "20fd1ef50e152174bc21d9946221c91557890d6631d859c0399f61d163157478"
+    },
+    {
+      "path": "artifacts/v3/native-acceptance-2026-10-22/webview-smoke.log",
+      "bytes": 1803,
+      "sha256": "556d5a8016bed01180859673f067a4dea895b47d3d76f0779ffc8015a142035e"
+    }
+  ]
+}
