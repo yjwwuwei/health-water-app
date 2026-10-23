@@ -2,6 +2,12 @@
 
 以 Android 为主的离线饮水记录应用，使用 React、TypeScript、IndexedDB 和 Capacitor。主要页面为「今天」「历史」「设置」。
 
+## 体验 v3 预览版
+
+- [下载 v3.0.0-beta.1](https://github.com/yjwwuwei/health-water-app/releases/tag/v3.0.0-beta.1)：提供 Android 开发 APK、Web 静态包与 SHA-256 校验文件。
+- [打开网页版](https://yjwwuwei.github.io/health-water-app/)：支持本地记录、历史、备份和首次访问后的离线使用。
+- [版本说明与安装须知](docs/releases/v3.0.0-beta.1.md)。Android 安装后显示「健康喝水 Dev」，可以与旧版并存；旧应用数据不会自动进入新包，请保留旧版。
+
 ## 版本范围
 
 - **v3.0 默认构建**：游客记录、真实撤销、历史补记/编辑/删除、JSON 备份迁移、Android 原生提醒、默认关闭的趣味姿势打卡。
